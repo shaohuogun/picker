@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.shaohuogun.picker.result.dao.ResultMapper">
+	<resultMap id="resultResultMap" type="org.shaohuogun.picker.result.model.Result">
+		<id property="id" column="id" />
+		<result property="creator" column="creator" />
+		<result property="createDate" column="create_date" />
+		<result property="lastModifier" column="last_modifier" />
+		<result property="lastModifyDate" column="last_modify_date" />
+		<result property="deleted" column="deleted" />
+		<result property="requestId" column="request_id" />
+		<result property="json" column="json"
+			typeHandler="org.shaohuogun.picker.plugin.ibatis.BlobTypeHandler" />
+		<result property="sent" column="sent" />
+	</resultMap>
+
+	<insert id="insert" parameterType="org.shaohuogun.picker.result.model.Result">
+		insert into SP_RESULT (id,
+		creator, create_date, deleted, request_id, json, sent)
+		values (#{id},
+		#{creator},
+		#{createDate}, #{deleted}, #{requestId},
+		#{json}, #{sent})
+	</insert>
+
+	<select id="selectById" parameterType="java.lang.String"
+		resultMap="resultResultMap">
+		select * from SP_RESULT where id = #{id}
+	</select>
+
+	<select id="selectBySent" parameterType="java.lang.Character"
+		resultMap="resultResultMap">
+		select * from SP_RESULT where deleted = '0' and sent =
+		#{sent} order by create_date asc limit 1
+	</select>
+
+	<update id="update" parameterType="org.shaohuogun.picker.result.model.Result"
+		flushCache="true">
+		update
+		SP_RESULT set last_modifier = #{lastModifier},
+		last_modify_date =
+		#{lastModifyDate}, deleted = #{deleted}, sent =
+		#{sent} where id = #{id}
+	</update>
+</mapper>
+

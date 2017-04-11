@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <typeAliases>
+        <package name="org.shaohuogun.picker.strategy.model"/>
+        <package name="org.shaohuogun.picker.request.model"/>
+        <package name="org.shaohuogun.picker.result.model"/>
+    </typeAliases>
+    <mappers>
+        <mapper resource="mybatis/StrategyMapper.xml"/>
+        <mapper resource="mybatis/RequestMapper.xml"/>
+        <mapper resource="mybatis/ResultMapper.xml"/>
+    </mappers>
+</configuration>

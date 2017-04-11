@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<strategy>
+
+	<object xpath="//div[@class='main']" jsonKey="result">
+		<object xpath="./div[1]/div" jsonKey="adInfo">
+			<string xpath="./a[1]/font" jsonKey="blogTeam" />
+			<string xpath="./a[1]" attribute="href" jsonKey="blogUrl" />
+			<string xpath="./a[2]/font" jsonKey="bagEvent" />
+			<string xpath="./a[2]" attribute="href" jsonKey="eventUrl" />
+			<string xpath="./a[3]/font" jsonKey="turingBook" />
+			<string xpath="./a[3]" attribute="href" jsonKey="bookUrl" />
+		</object>
+		<array xpath="./div[2]/div[2]/div" jsonKey="articles">
+			<string xpath="./div[1]/h1/span/a" jsonKey="title" />
+			<string xpath="./div[1]/h1/span/a" attribute="href" jsonKey="url" />
+			<string xpath="./div[2]" attribute="class" jsonKey="digest" />
+			<string xpath="./div[3]/span" jsonKey="releaseDate" />
+		</array>
+		<string xpath="./script" attribute="type" jsonKey="script" />
+	</object>
+
+	<handler id="dateFormat" scriptType="javascript">
+		hello world!
+	</handler>
+
+	<handler id="pageViews" scriptType="javascript">
+		nice to meet you!
+	</handler>
+
+</strategy>
+ 

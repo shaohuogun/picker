@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<strategy>
+
+	<string xpath="//div[@id='article_content']" jsonKey="content" />
+
+</strategy>
+ 
