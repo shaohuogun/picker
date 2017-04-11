@@ -18,7 +18,7 @@
 	</resultMap>
 
 	<insert id="insert" parameterType="org.shaohuogun.picker.strategy.model.Strategy">
-		insert into SP_STRATEGY (id,
+		insert into PICKER_STRATEGY (id,
 		creator, create_date, deleted, name, xml)
 		values (#{id}, #{creator},
 		#{createDate}, #{deleted}, #{name},
@@ -27,12 +27,12 @@
 
 	<select id="selectById" parameterType="java.lang.String"
 		resultMap="strategyResultMap">
-		select * from SP_STRATEGY where id = #{id}
+		select * from PICKER_STRATEGY where id = #{id}
 	</select>
 
 	<select id="selectByName" parameterType="java.lang.String"
 		resultMap="strategyResultMap">
-		select * from SP_STRATEGY where deleted = '0' and name = #{name}
+		select * from PICKER_STRATEGY where deleted = '0' and name = #{name}
 	</select>
 </mapper>
 

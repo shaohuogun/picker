@@ -23,8 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ResultService {
 	
-	@Value("${imedia.service.url}")
-	private String imediaSeriveUrl;
+	@Value("${reader.service.url}")
+	private String readerSeriveUrl;
 	
 	@Autowired
 	private RequestService requestService;
@@ -76,7 +76,7 @@ public class ResultService {
 		jsonResult.put(Request.KEY_BATCH_NO, request.getBatchNo());
 
 		HttpClient httpClient = HttpClientBuilder.create().build();
-		HttpPost httpPost = new HttpPost(imediaSeriveUrl);
+		HttpPost httpPost = new HttpPost(readerSeriveUrl);
 		StringEntity params = new StringEntity(jsonResult.toString(), Utility.UTF8);
 		httpPost.addHeader("Content-Type", "application/json;charset=UTF-8");
 		httpPost.addHeader("Accept", "application/json");

@@ -14,11 +14,11 @@
 --    limitations under the License.
 --
 
-drop table if exists `SP_STRATEGY`;
-drop table if exists `SP_REQUEST`;
-drop table if exists `SP_RESULT`;
+drop table if exists `PICKER_STRATEGY`;
+drop table if exists `PICKER_REQUEST`;
+drop table if exists `PICKER_RESULT`;
 
-CREATE TABLE `SP_STRATEGY` (
+CREATE TABLE `PICKER_STRATEGY` (
   `id` char(36) NOT NULL,
   `creator` char(36) NOT NULL,
   `create_date` datetime NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE `SP_STRATEGY` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `SP_REQUEST` (
+CREATE TABLE `PICKER_REQUEST` (
   `id` char(36) NOT NULL,
   `creator` char(36) NOT NULL,
   `create_date` datetime NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE `SP_REQUEST` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `SP_RESULT` (
+CREATE TABLE `PICKER_RESULT` (
   `id` char(36) NOT NULL,
   `creator` char(36) NOT NULL,
   `create_date` datetime NOT NULL,
