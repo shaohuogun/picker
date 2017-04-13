@@ -29,13 +29,6 @@ public class RequestController extends Controller {
 	@Autowired
 	private RequestService requestService;
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String index(HttpServletRequest req) {
-		String curUserId = Utility.getUUID().toString();
-		req.getSession().setAttribute(CURRENT_USER, curUserId);
-		return "Greetings from Spring Boot!";
-	}
-	
 	@RequestMapping(value = "/request", method = RequestMethod.POST)
 	public void createRequest(HttpServletRequest req) throws Exception {
 		req.setCharacterEncoding(Utility.UTF8);
