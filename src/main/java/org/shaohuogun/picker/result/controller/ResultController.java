@@ -15,7 +15,7 @@ public class ResultController extends Controller {
 	@Autowired
 	private ResultService resultService;
 	
-	@RequestMapping(value = "/result/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/result/{id}", method = RequestMethod.GET)
 	public Result getResult(@PathVariable String id) throws Exception {		
 		if ((id == null) || id.isEmpty()) {
 			throw new Exception("Invalid argument.");

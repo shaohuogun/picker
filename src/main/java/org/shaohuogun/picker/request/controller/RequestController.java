@@ -29,7 +29,7 @@ public class RequestController extends Controller {
 	@Autowired
 	private RequestService requestService;
 	
-	@RequestMapping(value = "/request", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/request", method = RequestMethod.POST)
 	public void createRequest(HttpServletRequest req) throws Exception {
 		req.setCharacterEncoding(Utility.UTF8);
 		StringBuffer sb = new StringBuffer();
@@ -67,7 +67,7 @@ public class RequestController extends Controller {
 		requestService.createRequest(request);
 	}
 
-	@RequestMapping(value = "/request/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/request/{id}", method = RequestMethod.GET)
 	public Request getRequest(@PathVariable String id) throws Exception {
 		if ((id == null) || id.isEmpty()) {
 			throw new Exception("Invalid argument.");
@@ -76,7 +76,7 @@ public class RequestController extends Controller {
 		return requestService.getRequest(id);
 	}
 
-	@RequestMapping(value = "/request/{id}/redo", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/request/{id}/redo", method = RequestMethod.GET)
 	public Request redo(HttpServletRequest req, @PathVariable String id) throws Exception {
 		if ((id == null) || id.isEmpty()) {
 			throw new Exception("Invalid argument.");

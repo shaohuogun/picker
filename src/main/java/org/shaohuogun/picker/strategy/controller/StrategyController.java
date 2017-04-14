@@ -21,7 +21,7 @@ public class StrategyController extends Controller {
 	@Autowired
 	private StrategyService strategyService;
 
-	@RequestMapping(value = "/strategy", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/strategy", method = RequestMethod.GET)
 	public Strategy createStrategy(HttpServletRequest req, @RequestParam(required = true) String file) throws Exception {		
         ClassLoader classLoader = getClass().getClassLoader();
         URL url = classLoader.getResource("strategy/"+ file + ".xml");
@@ -36,7 +36,7 @@ public class StrategyController extends Controller {
 		return strategyService.createStrategy(strategy);
 	}
 	
-	@RequestMapping(value = "/strategy/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/strategy/{id}", method = RequestMethod.GET)
 	public Strategy getStrategy(@PathVariable String id) throws Exception {		
 		if ((id == null) || id.isEmpty()) {
 			throw new Exception("Invalid argument.");
