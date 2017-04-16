@@ -3,19 +3,26 @@
 
 <strategy>
 
-	<array xpath="//ul[@class='bookIndex1']/li" jsonKey="result">
-		<string xpath="./a[1]/img" attribute="src" handler="urlFormat" jsonKey="cover" />
-		<string xpath="./a[2]" handler="titleFormat" jsonKey="title" />
-		<string xpath="./a[2]" attribute="href" handler="urlFormat" jsonKey="url" />
+	<array xpath="//ul[@class='bookList']/li" jsonKey="messages">
+		<string xpath="./a" attribute="href" jsonKey="url" />
+		<string xpath="./a" jsonKey="title" />
+		<string xpath="./a" handler="formatReleaseDate" jsonKey="releaseDate" />
+		<string xpath="./a" handler="formatPageview" jsonKey="pageview" />
+		<string xpath="./a" handler="formatCommentCount" jsonKey="commentCount" />
+		<string xpath="./a" jsonKey="digest" />
 	</array>
 
-	<handler id="urlFormat" scriptType="javascript">
-		var result = "http://www.ppzuowen.com" + param;
+	<handler id="formatReleaseDate" scriptType="javascript">
+		var result = "2017-04-17 01:15:00";
 	</handler>
 
-	<handler id="titleFormat" scriptType="javascript">
-		var result = "《" + param + "》";
+	<handler id="formatPageview" scriptType="javascript">
+		var result = "0";
 	</handler>
-
+	
+	<handler id="formatCommentCount" scriptType="javascript">
+		var result = "0";
+	</handler>
+		
 </strategy>
  
