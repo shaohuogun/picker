@@ -21,8 +21,6 @@ public class Request extends Model {
 	private String targetUrl;
 	
 	private String targetType;
-
-	private String strategyId;
 	
 	private String batchNo;
 
@@ -48,14 +46,6 @@ public class Request extends Model {
 
 	public void setTargetType(String targetType) {
 		this.targetType = targetType;
-	}
-
-	public String getStrategyId() {
-		return strategyId;
-	}
-
-	public void setStrategyId(String strategyId) {
-		this.strategyId = strategyId;
 	}
 
 	public String getBatchNo() {

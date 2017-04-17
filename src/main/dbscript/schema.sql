@@ -25,6 +25,7 @@ CREATE TABLE `PICKER_STRATEGY` (
   `last_modifier` char(36) DEFAULT NULL,
   `last_modify_date` datetime DEFAULT NULL,
   `deleted` char(1) NOT NULL,
+  `url_regex` varchar(256) NOT NULL,
   `name` varchar(128) NOT NULL,
   `xml` blob NOT NULL,
   PRIMARY KEY (`id`)
@@ -39,7 +40,6 @@ CREATE TABLE `PICKER_REQUEST` (
   `deleted` char(1) NOT NULL,
   `target_url` varchar(256) NOT NULL,
   `target_type` varchar(32) NOT NULL,
-  `strategy_id` char(36) NOT NULL,
   `batch_no` char(36) DEFAULT NULL,
   `result_id` char(36) DEFAULT NULL,
   `status` varchar(16) NOT NULL,
@@ -56,6 +56,7 @@ CREATE TABLE `PICKER_RESULT` (
   `last_modify_date` datetime DEFAULT NULL,
   `deleted` char(1) NOT NULL,
   `request_id` char(36) DEFAULT NULL,
+  `strategy_id` char(36) NOT NULL,  
   `json` blob NOT NULL,
   `sent` char(1) NOT NULL,
   PRIMARY KEY (`id`)

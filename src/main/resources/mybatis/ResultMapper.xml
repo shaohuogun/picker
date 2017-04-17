@@ -13,6 +13,7 @@
 		<result property="lastModifyDate" column="last_modify_date" />
 		<result property="deleted" column="deleted" />
 		<result property="requestId" column="request_id" />
+		<result property="strategyId" column="strategy_id" />
 		<result property="json" column="json"
 			typeHandler="org.shaohuogun.picker.plugin.ibatis.BlobTypeHandler" />
 		<result property="sent" column="sent" />
@@ -20,11 +21,11 @@
 
 	<insert id="insert" parameterType="org.shaohuogun.picker.result.model.Result">
 		insert into PICKER_RESULT (id,
-		creator, create_date, deleted, request_id, json, sent)
+		creator, create_date, deleted, request_id, strategy_id, json, sent)
 		values (#{id},
 		#{creator},
 		#{createDate}, #{deleted}, #{requestId},
-		#{json}, #{sent})
+		#{strategyId}, #{json}, #{sent})
 	</insert>
 
 	<select id="selectById" parameterType="java.lang.String"

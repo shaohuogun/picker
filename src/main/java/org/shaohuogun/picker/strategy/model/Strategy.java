@@ -6,12 +6,20 @@ public class Strategy extends Model {
 
 	private static final long serialVersionUID = 1L;
 	
-	public static final String KEY_STRATEGY_NAME = "strategyName";
+	private String urlRegex;
 	
 	private String name;
 	
 	private String xml;
 
+	public String getUrlRegex() {
+		return urlRegex;
+	}
+
+	public void setUrlRegex(String urlRegex) {
+		this.urlRegex = urlRegex;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -19,7 +27,7 @@ public class Strategy extends Model {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
 	public String getXml() {
 		return xml;
 	}

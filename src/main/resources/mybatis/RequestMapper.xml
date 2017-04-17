@@ -15,7 +15,6 @@
 		<result property="deleted" column="deleted" />
 		<result property="targetUrl" column="target_url" />
 		<result property="targetType" column="target_type" />
-		<result property="strategyId" column="strategy_id" />
 		<result property="batchNo" column="batch_no" />
 		<result property="resultId" column="result_id" />
 		<result property="status" column="status" />
@@ -27,11 +26,11 @@
 		insert into PICKER_REQUEST (id,
 		creator,
 		create_date, deleted, target_url, target_type,
-		strategy_id, batch_no, status)
+		batch_no, status)
 		values
 		(#{id}, #{creator},
 		#{createDate}, #{deleted}, #{targetUrl}, #{targetType},
-		#{strategyId}, #{batchNo}, #{status})
+		#{batchNo}, #{status})
 	</insert>
 
 	<select id="selectById" parameterType="java.lang.String"

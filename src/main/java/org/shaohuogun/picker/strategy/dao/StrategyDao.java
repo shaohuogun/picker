@@ -1,5 +1,8 @@
 package org.shaohuogun.picker.strategy.dao;
 
+import java.util.Date;
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.shaohuogun.picker.strategy.model.Strategy;
 import org.springframework.stereotype.Component;
@@ -23,6 +26,14 @@ public class StrategyDao {
 
 	public Strategy selectByName(String name) {
 		return sqlSession.selectOne("org.shaohuogun.picker.strategy.dao.StrategyMapper.selectByName", name);
+	}
+
+	public List<Strategy> selectAll() {
+		return sqlSession.selectList("org.shaohuogun.picker.strategy.dao.StrategyMapper.selectAll");
+	}
+
+	public List<Strategy> selectFresh(Date refreshTime) {
+		return sqlSession.selectList("org.shaohuogun.picker.strategy.dao.StrategyMapper.selectFresh", refreshTime);
 	}
 
 }

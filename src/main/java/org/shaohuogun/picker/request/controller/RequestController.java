@@ -12,8 +12,6 @@ import org.shaohuogun.common.Controller;
 import org.shaohuogun.common.Utility;
 import org.shaohuogun.picker.request.model.Request;
 import org.shaohuogun.picker.request.service.RequestService;
-import org.shaohuogun.picker.strategy.model.Strategy;
-import org.shaohuogun.picker.strategy.service.StrategyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,9 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class RequestController extends Controller {
-	
-	@Autowired
-	private StrategyService strategyService;
 	
 	@Autowired
 	private RequestService requestService;
@@ -57,16 +52,13 @@ public class RequestController extends Controller {
 		Request request = new Request();
 		request.setId(Utility.getUUID());
 		request.setCreator("41f98331-11b4-4b70-8ab3-b2b3332324b5");
-		request.setTargetUrl(jsonRequest.getString(Request.KEY_TARGET_URL));
+		String targetUrl = jsonRequest.getString(Request.KEY_TARGET_URL);
+		request.setTargetUrl(targetUrl);
 		request.setTargetType(jsonRequest.getString(Request.KEY_TARGET_TYPE));
-		String strategyName = jsonRequest.getString(Strategy.KEY_STRATEGY_NAME);
-		
-		Strategy strategy = strategyService.getStrategyByName(strategyName);		
-		request.setStrategyId(strategy.getId());
-		request.setBatchNo(jsonRequest.getString(Request.KEY_BATCH_NO));
+		request.setBatchNo(jsonRequest.getString(Request.KEY_BATCH_NO));	
 		requestService.createRequest(request);
 	}
-
+	
 	@RequestMapping(value = "/api/request/{id}", method = RequestMethod.GET)
 	public Request getRequest(@PathVariable String id) throws Exception {
 		if ((id == null) || id.isEmpty()) {

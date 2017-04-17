@@ -10,6 +10,8 @@ public class Result extends Model {
 	public static final Character SENT_YES = '1';
 	
 	private String requestId;
+	
+	private String strategyId;
 
 	private String json;
 	
@@ -21,6 +23,14 @@ public class Result extends Model {
 
 	public void setRequestId(String requestId) {
 		this.requestId = requestId;
+	}
+	
+	public String getStrategyId() {
+		return strategyId;
+	}
+
+	public void setStrategyId(String strategyId) {
+		this.strategyId = strategyId;
 	}
 
 	public String getJson() {
