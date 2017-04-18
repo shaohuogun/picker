@@ -5,8 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class PickerApplication {
-	
+
 	public static void main(String[] args) {
-		SpringApplication.run(PickerApplication.class, args);
+		SpringApplication springApplication = new SpringApplication(PickerApplication.class);
+		springApplication.addListeners(new PickerStartup());
+		springApplication.run(args);
 	}
 }

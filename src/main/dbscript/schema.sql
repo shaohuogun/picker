@@ -25,8 +25,8 @@ CREATE TABLE `PICKER_STRATEGY` (
   `last_modifier` char(36) DEFAULT NULL,
   `last_modify_date` datetime DEFAULT NULL,
   `deleted` char(1) NOT NULL,
+  `name` varchar(128) NOT NULL,  
   `url_regex` varchar(256) NOT NULL,
-  `name` varchar(128) NOT NULL,
   `xml` blob NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

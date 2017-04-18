@@ -1,4 +1,4 @@
-package org.shaohuogun.picker;
+package org.shaohuogun;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.shaohuogun.picker.strategy.service.StrategyService;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
-public class ApplicationStartup implements ApplicationListener<ContextRefreshedEvent> {
+public class PickerStartup implements ApplicationListener<ContextRefreshedEvent> {
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {

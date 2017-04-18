@@ -12,17 +12,17 @@
 		<result property="lastModifier" column="last_modifier" />
 		<result property="lastModifyDate" column="last_modify_date" />
 		<result property="deleted" column="deleted" />
-		<result property="urlRegex" column="url_regex" />
 		<result property="name" column="name" />
+		<result property="urlRegex" column="url_regex" />		
 		<result property="xml" column="xml"
 			typeHandler="org.shaohuogun.picker.plugin.ibatis.BlobTypeHandler" />
 	</resultMap>
 
 	<insert id="insert" parameterType="org.shaohuogun.picker.strategy.model.Strategy">
 		insert into PICKER_STRATEGY (id,
-		creator, create_date, deleted, url_regex, name, xml)
+		creator, create_date, deleted, name, url_regex, xml)
 		values (#{id}, #{creator},
-		#{createDate}, #{deleted}, #{urlRegex}, #{name},
+		#{createDate}, #{deleted}, #{name}, #{urlRegex},
 		#{xml})
 	</insert>
 
@@ -40,9 +40,9 @@
 		select * from PICKER_STRATEGY where deleted = '0'
 	</select>	
 	
-	<select id="selectFresh" parameterType="java.lang.String"
+	<select id="selectFresh" parameterType="java.util.Date"
 		resultMap="strategyResultMap">
-		select * from PICKER_STRATEGY where deleted = '0' and ((create_date > #{refreshTime}) or ((last_modify_date > #{refreshTime}))
+		select * from PICKER_STRATEGY where deleted = '0' and create_date > #{refreshTime}
 	</select>	
 </mapper>
 

@@ -45,6 +45,7 @@ public class ProcessorService {
 			result.setId(Utility.getUUID());
 			result.setCreator(request.getCreator());
 			result.setRequestId(request.getId());
+			result.setStrategyId(strategyId);
 			result.setJson(jsonResult.toString());
 			resultService.createResult(result);
 

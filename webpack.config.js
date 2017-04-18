@@ -1,15 +1,19 @@
 const webpack = require('webpack');
 const path = require('path');
-const buildPath = path.resolve(__dirname, 'src/main/webapp/script');
+const srcPath = path.resolve(__dirname, 'src/main/javascript');
+const dstPath = path.resolve(__dirname, 'src/main/webapp/script');
 const nodeModulesPath = path.resolve(__dirname, 'node_modules');
 
 const config = {
-  entry: [
-    path.join(__dirname, '/src/main/javascript/portal.js'),
-  ],
+  entry: {
+       portal: [path.join(srcPath, '/portal.js')],
+       strategy: [path.join(srcPath, '/strategy.js')],
+       request: [path.join(srcPath, '/request.js')],
+       result: [path.join(srcPath, '/result.js')]      
+    },
   output: {
-    path: buildPath,
-    filename: 'portal.js',
+    path: dstPath,
+    filename: "[name].js",
   },
   module: {
     loaders: [

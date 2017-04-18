@@ -26,15 +26,13 @@ public class StrategyPool {
 	}
 	
 	public synchronized void refresh(List<Strategy> strategies) {
-		if ((strategies == null) || strategies.isEmpty()) {
-			return;
-		}
-		
-		for (Strategy curStrategy : strategies) {
-			strategyMap.put(curStrategy.getUrlRegex(), curStrategy);
-		}
-
 		refreshTime = new Date();
+		
+		if ((strategies != null) && !strategies.isEmpty()) {
+			for (Strategy curStrategy : strategies) {
+				strategyMap.put(curStrategy.getUrlRegex(), curStrategy);
+			}
+		}
 	}
 
 	public Date getRefreshTime() {
