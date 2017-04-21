@@ -53,9 +53,16 @@ public class RequestController extends Controller {
 		request.setId(Utility.getUUID());
 		request.setCreator("41f98331-11b4-4b70-8ab3-b2b3332324b5");
 		String targetUrl = jsonRequest.getString(Request.KEY_TARGET_URL);
+		String targetType = jsonRequest.getString(Request.KEY_TARGET_TYPE);
+		String batchNo = jsonRequest.getString(Request.KEY_BATCH_NO);
+		if ((targetUrl == null) || targetUrl.isEmpty() || (targetType == null) || targetType.isEmpty()
+				|| (batchNo == null) || batchNo.isEmpty()) {
+			throw new Exception("Invalid request.");
+		}
+		
 		request.setTargetUrl(targetUrl);
-		request.setTargetType(jsonRequest.getString(Request.KEY_TARGET_TYPE));
-		request.setBatchNo(jsonRequest.getString(Request.KEY_BATCH_NO));	
+		request.setTargetType(targetType);
+		request.setBatchNo(batchNo);	
 		requestService.createRequest(request);
 	}
 	
