@@ -57,7 +57,7 @@ CREATE TABLE `PICKER_RESULT` (
   `deleted` char(1) NOT NULL,
   `request_id` char(36) DEFAULT NULL,
   `strategy_id` char(36) NOT NULL,  
-  `json` blob NOT NULL,
+  `json` mediumblob NOT NULL,
   `sent` char(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

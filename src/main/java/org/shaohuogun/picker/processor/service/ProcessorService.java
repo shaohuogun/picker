@@ -37,6 +37,10 @@ public class ProcessorService {
 			request.setStatus(Request.STATUS_PROCESSING);
 			requestService.modifyRequest(request);
 			String strategyId = StrategyPool.getInstance().getSuitableStrategyId(request.getTargetUrl());
+			if ((strategyId == null) || strategyId.isEmpty()) {
+				throw new Exception("Cann't find a suitable strategy.");				
+			}
+			
 			Strategy strategy = strategyService.getStrategy(strategyId);
 			StrategyTag strategyTag = StrategyTag.parse(strategy.getXml());
 			JSONObject jsonResult = PickerUtility.pickPage(request.getTargetUrl(), strategyTag);
