@@ -44,8 +44,8 @@ public class StrategyTag extends Tag {
 	}
 
 	public HandlerTag getHandlerTag(String handlerId) throws Exception {
-		if (handlerId == null) {
-			throw new Exception("Invalid arguments.");
+		if ((handlerId == null) || handlerId.isEmpty()) {
+			throw new IllegalArgumentException("Handler's id cann't be null or empty.");
 		}
 		
 		return handlerTagMap.get(handlerId);
@@ -53,7 +53,7 @@ public class StrategyTag extends Tag {
 
 	public void addHandlerTag(HandlerTag handlerTag) throws Exception {
 		if (handlerTag == null) {
-			throw new Exception("Invalid arguments.");
+			throw new NullPointerException("Handler tag cann't be null.");
 		}
 
 		this.handlerTagMap.put(handlerTag.getId(), handlerTag);
@@ -61,7 +61,7 @@ public class StrategyTag extends Tag {
 
 	public static final StrategyTag parse(final String xml) throws Exception {
 		if ((xml == null) || xml.isEmpty()) {
-			throw new Exception("Invalid arguments.");
+			throw new IllegalArgumentException("Xml cann't be null or empty.");
 		}
 
 		DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();

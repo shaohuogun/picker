@@ -26,7 +26,7 @@ public class RequestController extends Controller {
 	
 	@RequestMapping(value = "/api/request", method = RequestMethod.POST)
 	public void createRequest(HttpServletRequest req) throws Exception {
-		req.setCharacterEncoding(Utility.UTF8);
+		req.setCharacterEncoding(Utility.ENCODE_UTF8);
 		StringBuffer sb = new StringBuffer();
 		InputStream is = req.getInputStream();
 		InputStreamReader isr = new InputStreamReader(is);
@@ -55,9 +55,16 @@ public class RequestController extends Controller {
 		String targetUrl = jsonRequest.getString(Request.KEY_TARGET_URL);
 		String targetType = jsonRequest.getString(Request.KEY_TARGET_TYPE);
 		String batchNo = jsonRequest.getString(Request.KEY_BATCH_NO);
-		if ((targetUrl == null) || targetUrl.isEmpty() || (targetType == null) || targetType.isEmpty()
-				|| (batchNo == null) || batchNo.isEmpty()) {
-			throw new Exception("Invalid request.");
+		if ((targetUrl == null) || targetUrl.isEmpty()) {
+			throw new IllegalArgumentException("Target url cann't be null or empty.");
+		}
+
+		if ((targetType == null) || targetType.isEmpty()) {
+			throw new IllegalArgumentException("Target type cann't be null or empty.");
+		}
+		
+		if ((batchNo == null) || batchNo.isEmpty()) {
+			throw new IllegalArgumentException("Batch no cann't be null or empty.");
 		}
 		
 		request.setTargetUrl(targetUrl);
@@ -68,19 +75,11 @@ public class RequestController extends Controller {
 	
 	@RequestMapping(value = "/api/request/{id}", method = RequestMethod.GET)
 	public Request getRequest(@PathVariable String id) throws Exception {
-		if ((id == null) || id.isEmpty()) {
-			throw new Exception("Invalid argument.");
-		}
-
 		return requestService.getRequest(id);
 	}
 
 	@RequestMapping(value = "/api/request/{id}/redo", method = RequestMethod.GET)
 	public Request redo(HttpServletRequest req, @PathVariable String id) throws Exception {
-		if ((id == null) || id.isEmpty()) {
-			throw new Exception("Invalid argument.");
-		}
-
 		Request request = requestService.getRequest(id);
 		if (request == null) {
 			throw new Exception("Invalid argument.");

@@ -27,7 +27,7 @@ public class ArrayTag extends ResultTag {
 
 	public void addResultTag(ResultTag resultTag) throws Exception {
 		if (resultTag == null) {
-			throw new Exception("Invalid arguments.");
+			throw new NullPointerException("Result tag cann't be null.");
 		}
 		
 		this.resultTags.add(resultTag);
@@ -35,7 +35,7 @@ public class ArrayTag extends ResultTag {
 	
 	public static final ArrayTag parse(Node node, Tag parent) throws Exception {
 		if (node == null) {
-			throw new Exception("Invalid arguments.");
+			throw new NullPointerException("Node cann't be null.");
 		}
 		
 		ArrayTag arrayTag = new ArrayTag(parent);

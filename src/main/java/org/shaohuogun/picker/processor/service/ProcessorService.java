@@ -29,7 +29,7 @@ public class ProcessorService {
 	
 	public void process(Request request) throws Exception {
 		if (request == null) {
-			throw new Exception("Invalid argument.");
+			throw new NullPointerException("Request cann't be null.");
 		}
 		
 		try {
@@ -59,8 +59,7 @@ public class ProcessorService {
 			requestService.modifyRequest(request);
 		} catch (Exception e) {
 			request.setStatus(Request.STATUS_ERROR);
-			requestService.modifyRequest(request);
-			
+			requestService.modifyRequest(request);		
 			throw e;
 		}
 	}

@@ -69,10 +69,18 @@ public class HandlerTag extends Tag {
 
 	private static final String parseAttribute(Node node, String attribute, boolean nullable, String tagUri)
 			throws Exception {
-		if ((node == null) || (attribute == null) || attribute.isEmpty() || (tagUri == null) || tagUri.isEmpty()) {
-			throw new Exception("Invalid arguments.");
+		if (node == null) {
+			throw new NullPointerException("Node cann't be null.");
+		}
+		
+		if ((attribute == null) || attribute.isEmpty()) {
+			throw new IllegalArgumentException("Attribute cann't be null or empty.");
 		}
 
+		if ((tagUri == null) || tagUri.isEmpty()) {
+			throw new IllegalArgumentException("Tag uri cann't be null or empty.");
+		}
+		
 		NamedNodeMap namedNodeMap = node.getAttributes();
 		Node attributeNode = namedNodeMap.getNamedItem(attribute);
 		if ((attributeNode == null) || (attributeNode.getNodeValue() == null)
@@ -89,7 +97,7 @@ public class HandlerTag extends Tag {
 
 	public static final HandlerTag parse(Node node, Tag parent) throws Exception {
 		if (node == null) {
-			throw new Exception("Invalid arguments.");
+			throw new NullPointerException("Node cann't be null.");
 		}
 
 		HandlerTag handlerTag = new HandlerTag(parent);

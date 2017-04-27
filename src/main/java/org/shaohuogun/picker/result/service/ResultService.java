@@ -35,7 +35,7 @@ public class ResultService {
 	@Transactional
 	public Result createResult(Result result) throws Exception {
 		if (result == null) {
-			throw new Exception("Invalid argument.");
+			throw new NullPointerException("Result cann't be null.");
 		}
 
 		resultDao.insert(result);
@@ -44,7 +44,7 @@ public class ResultService {
 
 	public Result getResult(String id) throws Exception {
 		if ((id == null) || id.isEmpty()) {
-			throw new Exception("Invalid argument.");
+			throw new IllegalArgumentException("Result's id cann't be null or empty.");
 		}
 
 		return resultDao.selectById(id);
@@ -57,7 +57,7 @@ public class ResultService {
 	@Transactional
 	public Result modifyResult(Result result) throws Exception {
 		if (result == null) {
-			throw new Exception("Invalid argument.");
+			throw new NullPointerException("Result cann't be null.");
 		}
 		
 		resultDao.update(result);
@@ -66,7 +66,7 @@ public class ResultService {
 
 	public void send(Result result) throws Exception {
 		if (result == null) {
-			throw new Exception("Invalid argument.");
+			throw new NullPointerException("Result cann't be null.");
 		}
 		
 		JSONObject jsonResult = new JSONObject(result.getJson());
@@ -77,7 +77,7 @@ public class ResultService {
 
 		HttpClient httpClient = HttpClientBuilder.create().build();
 		HttpPost httpPost = new HttpPost(readerSeriveUrl);
-		StringEntity params = new StringEntity(jsonResult.toString(), Utility.UTF8);
+		StringEntity params = new StringEntity(jsonResult.toString(), Utility.ENCODE_UTF8);
 		httpPost.addHeader("Content-Type", "application/json;charset=UTF-8");
 		httpPost.addHeader("Accept", "application/json");
 		httpPost.setEntity(params);

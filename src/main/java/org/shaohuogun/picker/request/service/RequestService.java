@@ -18,7 +18,7 @@ public class RequestService {
 	@Transactional
 	public Request createRequest(Request request) throws Exception {
 		if (request == null) {
-			throw new Exception("Invalid argument.");
+			throw new NullPointerException("Request cann't be null.");
 		}
 
 		requestDao.insert(request);
@@ -27,7 +27,7 @@ public class RequestService {
 
 	public Request getRequest(String id) throws Exception {
 		if ((id == null) || id.isEmpty()) {
-			throw new Exception("Invalid argument.");
+			throw new IllegalArgumentException("Request's id cann't be null or empty.");
 		}
 
 		return requestDao.selectById(id);
@@ -35,7 +35,7 @@ public class RequestService {
 
 	public List<Request> getRequests(Pagination pagination) throws Exception {
 		if (pagination == null) {
-			throw new Exception("Invalid argument.");
+			throw new NullPointerException("Pagination cann't be null.");
 		}
 
 		// TODO Auto-generated method stub
@@ -44,7 +44,7 @@ public class RequestService {
 
 	public Request getRequestByStatus(String status) throws Exception {
 		if ((status == null) || status.isEmpty()) {
-			throw new Exception("Invalid argument.");
+			throw new IllegalArgumentException("Status cann't be null or empty.");
 		}
 
 		return requestDao.selectByStatus(status);
@@ -53,7 +53,7 @@ public class RequestService {
 	@Transactional
 	public Request modifyRequest(Request request) throws Exception {
 		if (request == null) {
-			throw new Exception("Invalid argument.");
+			throw new NullPointerException("Request cann't be null.");
 		}
 
 		requestDao.update(request);

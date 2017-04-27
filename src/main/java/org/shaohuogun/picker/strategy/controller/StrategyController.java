@@ -28,10 +28,6 @@ public class StrategyController extends Controller {
 	
 	@RequestMapping(value = "/api/strategy/{id}", method = RequestMethod.GET)
 	public Strategy getStrategy(@PathVariable String id) throws Exception {
-		if ((id == null) || id.isEmpty()) {
-			throw new Exception("Invalid argument.");
-		}
-
 		return strategyService.getStrategy(id);
 	}
 	

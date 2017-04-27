@@ -20,7 +20,11 @@ public abstract class PickerUtility {
 
 	private final static String pickString(final DomElement domElement, final StringTag stringTag) throws Exception {
 		if (domElement == null) {
-			throw new Exception("Page's DOM data structure doesn't have expected node.");
+			throw new NullPointerException("Page's DOM data structure doesn't have expected node.");
+		}
+		
+		if (stringTag == null) {
+			throw new NullPointerException("StringTag cann't be null.");
 		}
 
 		String result = null;
@@ -46,11 +50,11 @@ public abstract class PickerUtility {
 	private final static JSONObject pickObject(final DomElement domElement, final List<ResultTag> resultTags)
 			throws Exception {
 		if (domElement == null) {
-			throw new Exception("Page's DOM data structure doesn't have expected node.");
+			throw new NullPointerException("Page's DOM data structure doesn't have expected node.");
 		}
 
 		if ((resultTags == null) || resultTags.isEmpty()) {
-			throw new Exception("Invalid arguments.");
+			throw new IllegalArgumentException("ResultTags cann't be null or empty.");
 		}
 
 		JSONObject jsonObject = new JSONObject();
@@ -75,11 +79,11 @@ public abstract class PickerUtility {
 	private final static JSONArray pickArray(final List<DomElement> domElements, final List<ResultTag> resultTags)
 			throws Exception {
 		if ((domElements == null) || domElements.isEmpty()) {
-			throw new Exception("Page's DOM data structure doesn't have expected nodes.");
+			throw new IllegalArgumentException("Page's DOM data structure doesn't have expected nodes.");
 		}
 
 		if ((resultTags == null) || resultTags.isEmpty()) {
-			throw new Exception("Invalid arguments.");
+			throw new IllegalArgumentException("ResultTags cann't be null or empty.");
 		}
 
 		JSONArray jsonArray = new JSONArray();
@@ -91,6 +95,14 @@ public abstract class PickerUtility {
 	}
 
 	public final static JSONObject pickPage(String url, StrategyTag strategyTag) throws Exception {
+		if ((url == null) || url.isEmpty()) {
+			throw new IllegalArgumentException("Url cann't be null or empty.");
+		}
+		
+		if (strategyTag == null) {
+			throw new NullPointerException("StrategyTag cann't be null.");
+		}
+		
 		JSONObject jsonResult = new JSONObject();
 
 		WebClient webClient = new WebClient(BrowserVersion.CHROME);
@@ -105,7 +117,7 @@ public abstract class PickerUtility {
 		try {
 			HtmlPage page = webClient.getPage(url);
 			if (page == null) {
-				throw new Exception("Fail to load the page [" + url + "].");
+				throw new NullPointerException("Fail to load the page [" + url + "].");
 			}
 
 			ResultTag resultTag = strategyTag.getResultTag();

@@ -40,7 +40,7 @@ public class StringTag extends ResultTag {
 
 	public static final StringTag parse(Node node, Tag parent) throws Exception {
 		if (node == null) {
-			throw new Exception("Invalid arguments.");
+			throw new NullPointerException("Node cann't be null.");
 		}
 
 		StringTag stringTag = new StringTag(parent);

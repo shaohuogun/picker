@@ -17,10 +17,6 @@ public class ResultController extends Controller {
 	
 	@RequestMapping(value = "/api/result/{id}", method = RequestMethod.GET)
 	public Result getResult(@PathVariable String id) throws Exception {		
-		if ((id == null) || id.isEmpty()) {
-			throw new Exception("Invalid argument.");
-		}
-		
 		return resultService.getResult(id);
 	}
 	

@@ -40,8 +40,8 @@ public class StrategyPool {
 	}
 
 	public String getSuitableStrategyId(String targetUrl) throws Exception {
-		if (targetUrl == null) {
-			throw new Exception("Invalid argument.");
+		if ((targetUrl == null) || targetUrl.isEmpty()) {
+			throw new IllegalArgumentException("Target url cann't be null or empty.");
 		}
 
 		for (String curKey : strategyMap.keySet()) {

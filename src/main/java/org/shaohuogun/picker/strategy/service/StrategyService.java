@@ -18,26 +18,26 @@ public class StrategyService {
 	@Transactional
 	public Strategy createStrategy(Strategy strategy) throws Exception {
 		if (strategy == null) {
-			throw new Exception("Invalid argument.");
+			throw new NullPointerException("Strategy cann't be null.");
 		}
-
+		
 		strategyDao.insert(strategy);
 		return strategyDao.selectById(strategy.getId());
 	}
-
+	
 	public Strategy getStrategy(String id) throws Exception {
 		if ((id == null) || id.isEmpty()) {
-			throw new Exception("Invalid argument.");
+			throw new IllegalArgumentException("Strategy's id cann't be null or empty.");
 		}
 
 		return strategyDao.selectById(id);
 	}
-
+	
 	public Strategy getStrategyByName(String name) throws Exception {
-		if (name == null) {
-			throw new Exception("Invalid argument.");
+		if ((name == null) || name.isEmpty()) {
+			throw new IllegalArgumentException("Strategy's name cann't be null or empty.");
 		}
-
+		
 		return strategyDao.selectByName(name);
 	}
 
@@ -47,7 +47,7 @@ public class StrategyService {
 
 	public List<Strategy> getFreshStrategies(Date refreshTime) throws Exception {
 		if (refreshTime == null) {
-			throw new Exception("Invalid argument.");
+			throw new NullPointerException("Refresh time cann't be null.");
 		}
 
 		return strategyDao.selectFresh(refreshTime);

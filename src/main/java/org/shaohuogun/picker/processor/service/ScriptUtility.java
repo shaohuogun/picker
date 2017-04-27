@@ -9,10 +9,14 @@ public abstract class ScriptUtility {
 	private final static String KEY_RESULT = "result";
 
 	public final static String execute(String script, String param) throws Exception {
-		if ((script == null) || script.isEmpty() || (param == null) || param.isEmpty()) {
-			throw new Exception("Invalid arguments.");
+		if ((script == null) || script.isEmpty()) {
+			throw new IllegalArgumentException("Script cann't be null or empty.");
 		}
-
+		
+		if ((param == null) || param.isEmpty()) {
+			throw new IllegalArgumentException("Script cann't be null or empty.");
+		}
+		
 		ScriptEngineManager manager = new ScriptEngineManager();
 		ScriptEngine engine = manager.getEngineByName("javascript");
 		engine.put(KEY_PARAM, param);
