@@ -3,6 +3,8 @@ package org.shaohuogun.picker.strategy.service;
 import java.util.Date;
 import java.util.List;
 
+import org.shaohuogun.common.Model;
+import org.shaohuogun.common.Pagination;
 import org.shaohuogun.picker.strategy.dao.StrategyDao;
 import org.shaohuogun.picker.strategy.model.Strategy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +53,30 @@ public class StrategyService {
 		}
 
 		return strategyDao.selectFresh(refreshTime);
+	}
+	
+	public int getStrategyCountByCreator(String creator) throws Exception {
+		if ((creator == null) || creator.isEmpty()) {
+			throw new IllegalArgumentException("Creator cann't be null or empty.");
+		}
+		
+		return strategyDao.countByCreator(creator);
+	}
+	
+	public Pagination getStrategiesByCreator(String creator, Pagination pagination) throws Exception {
+		if ((creator == null) || creator.isEmpty()) {
+			throw new IllegalArgumentException("Creator cann't be null or empty.");
+		}
+		
+		if (pagination == null) {
+			throw new NullPointerException("Pagination cann't be null.");
+		}
+		
+		int offset = (pagination.getPageIndex() - 1) * pagination.getPageSize();
+		int limit = pagination.getPageSize();
+		List<Model> strategies = strategyDao.selectByCreator(creator, offset, limit);
+		pagination.setObjects(strategies);
+		return pagination;
 	}
 
 }

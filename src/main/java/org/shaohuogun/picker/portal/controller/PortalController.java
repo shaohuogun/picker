@@ -11,22 +11,7 @@ public class PortalController extends Controller {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView portal() {
-		return new ModelAndView("portal");
-	}
-	
-	@RequestMapping(value = "/strategy", method = RequestMethod.GET)
-	public ModelAndView strategy() {
-		return new ModelAndView("strategy");
-	}
-	
-	@RequestMapping(value = "/request", method = RequestMethod.GET)
-	public ModelAndView request() {
-		return new ModelAndView("request");
-	}
-	
-	@RequestMapping(value = "/result", method = RequestMethod.GET)
-	public ModelAndView result() {
-		return new ModelAndView("result");
+		return new ModelAndView("picker");
 	}
 	
 }

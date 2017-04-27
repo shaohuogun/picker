@@ -3,7 +3,9 @@ package org.shaohuogun.picker.strategy.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
+import org.shaohuogun.common.Model;
 import org.shaohuogun.picker.strategy.model.Strategy;
 import org.springframework.stereotype.Component;
 
@@ -35,5 +37,15 @@ public class StrategyDao {
 	public List<Strategy> selectFresh(Date refreshTime) {
 		return sqlSession.selectList("org.shaohuogun.picker.strategy.dao.StrategyMapper.selectFresh", refreshTime);
 	}
+	
+	public int countByCreator(String creator) {
+		return sqlSession.selectOne("org.shaohuogun.picker.strategy.dao.StrategyMapper.countByCreator", creator);
+	}
+
+	public List<Model> selectByCreator(String creator, int offset, int limit) {
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return sqlSession.selectList("org.shaohuogun.picker.strategy.dao.StrategyMapper.selectByCreator", creator,
+				rowBounds);
+	}	
 
 }

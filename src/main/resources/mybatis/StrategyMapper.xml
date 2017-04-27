@@ -43,6 +43,19 @@
 	<select id="selectFresh" parameterType="java.util.Date"
 		resultMap="strategyResultMap">
 		select * from PICKER_STRATEGY where deleted = '0' and create_date > #{refreshTime}
-	</select>	
+	</select>
+
+	<select id="countByCreator" parameterType="java.lang.String"
+		resultType="java.lang.Integer">
+		select count(*) from PICKER_STRATEGY where deleted = '0' and creator
+		= #{creator}
+	</select>
+
+	<select id="selectByCreator" parameterType="java.lang.String"
+		resultMap="strategyResultMap">
+		select * from PICKER_STRATEGY where deleted = '0' and creator
+		= #{creator} order by create_date desc
+	</select>
+		
 </mapper>
 

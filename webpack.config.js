@@ -6,10 +6,7 @@ const nodeModulesPath = path.resolve(__dirname, 'node_modules');
 
 const config = {
   entry: {
-       portal: [path.join(srcPath, '/portal.js')],
-       strategy: [path.join(srcPath, '/strategy.js')],
-       request: [path.join(srcPath, '/request.js')],
-       result: [path.join(srcPath, '/result.js')]      
+       picker: path.join(srcPath, '/picker.js'),
     },
   output: {
     path: dstPath,
