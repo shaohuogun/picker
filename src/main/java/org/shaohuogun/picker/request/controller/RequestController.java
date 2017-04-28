@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONObject;
 import org.shaohuogun.common.Controller;
+import org.shaohuogun.common.Pagination;
 import org.shaohuogun.common.Utility;
 import org.shaohuogun.picker.request.model.Request;
 import org.shaohuogun.picker.request.service.RequestService;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -77,9 +79,20 @@ public class RequestController extends Controller {
 	public Request getRequest(@PathVariable String id) throws Exception {
 		return requestService.getRequest(id);
 	}
+	
+	@RequestMapping(value = "/api/requests", method = RequestMethod.GET)
+	public Pagination getRequests(@RequestParam(defaultValue = "1", required = false) int page) throws Exception {
+		String creator = "41f98331-11b4-4b70-8ab3-b2b3332324b5";
+
+		int total = requestService.getRequestCountByCreator(creator);
+		Pagination pagination = new Pagination();
+		pagination.setTotal(total);
+		pagination.setPageIndex(page);
+		return requestService.getRequestsByCreator(creator, pagination);
+	}	
 
 	@RequestMapping(value = "/api/request/{id}/redo", method = RequestMethod.GET)
-	public Request redo(HttpServletRequest req, @PathVariable String id) throws Exception {
+	public Request redoRequest(@PathVariable String id) throws Exception {
 		Request request = requestService.getRequest(id);
 		if (request == null) {
 			throw new Exception("Invalid argument.");

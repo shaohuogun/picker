@@ -2,6 +2,7 @@ package org.shaohuogun.picker.request.service;
 
 import java.util.List;
 
+import org.shaohuogun.common.Model;
 import org.shaohuogun.common.Pagination;
 import org.shaohuogun.picker.request.dao.RequestDao;
 import org.shaohuogun.picker.request.model.Request;
@@ -58,6 +59,30 @@ public class RequestService {
 
 		requestDao.update(request);
 		return requestDao.selectById(request.getId());
+	}
+	
+	public int getRequestCountByCreator(String creator) throws Exception {
+		if ((creator == null) || creator.isEmpty()) {
+			throw new IllegalArgumentException("Creator cann't be null or empty.");
+		}
+		
+		return requestDao.countByCreator(creator);
+	}
+	
+	public Pagination getRequestsByCreator(String creator, Pagination pagination) throws Exception {
+		if ((creator == null) || creator.isEmpty()) {
+			throw new IllegalArgumentException("Creator cann't be null or empty.");
+		}
+		
+		if (pagination == null) {
+			throw new NullPointerException("Pagination cann't be null.");
+		}
+		
+		int offset = (pagination.getPageIndex() - 1) * pagination.getPageSize();
+		int limit = pagination.getPageSize();
+		List<Model> requests = requestDao.selectByCreator(creator, offset, limit);
+		pagination.setObjects(requests);
+		return pagination;
 	}
 
 }

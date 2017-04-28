@@ -6,13 +6,17 @@
 	<array xpath="//div[@id='article_list']/div" jsonKey="messages">
 		<string xpath="./div[1]/h1/span/a" attribute="href" jsonKey="url" />
 		<string xpath="./div[1]/h1/span/a" jsonKey="title" />
-		<string xpath="./div[3]/span[1]" jsonKey="releaseDate" />
-		<string xpath="./div[3]/span[2]" handler="format" jsonKey="pageview" />
-		<string xpath="./div[3]/span[3]" handler="format" jsonKey="commentCount" />
+		<string xpath="./div[3]/span[1]" handler="formatDate" jsonKey="releaseDate" />
+		<string xpath="./div[3]/span[2]" handler="formatInteger" jsonKey="pageview" />
+		<string xpath="./div[3]/span[3]" handler="formatInteger" jsonKey="commentCount" />
 		<string xpath="./div[2]" jsonKey="digest" />
 	</array>
 
-	<handler id="format" scriptType="javascript">
+	<handler id="formatDate" scriptType="javascript">
+		var result = param + ":00";
+	</handler>
+
+	<handler id="formatInteger" scriptType="javascript">
 		var beginIdx = param.indexOf("(") + 1;
 		var endIdx = param.indexOf(")");
 		var result = param.substring(beginIdx, endIdx);

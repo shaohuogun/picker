@@ -25,6 +25,10 @@ public class StrategyDao {
 	public Strategy selectById(String id) {
 		return sqlSession.selectOne("org.shaohuogun.picker.strategy.dao.StrategyMapper.selectById", id);
 	}
+	
+	public void update(Strategy strategy) {
+		sqlSession.update("org.shaohuogun.picker.strategy.dao.StrategyMapper.update", strategy);
+	}
 
 	public Strategy selectByName(String name) {
 		return sqlSession.selectOne("org.shaohuogun.picker.strategy.dao.StrategyMapper.selectByName", name);

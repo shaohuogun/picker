@@ -30,6 +30,16 @@
 		resultMap="strategyResultMap">
 		select * from PICKER_STRATEGY where id = #{id}
 	</select>
+	
+	<update id="update" parameterType="org.shaohuogun.picker.strategy.model.Strategy"
+		flushCache="true">
+		update
+		PICKER_STRATEGY set last_modifier = #{lastModifier},
+		last_modify_date =
+		#{lastModifyDate}, deleted = #{deleted}
+		where
+		id = #{id}
+	</update>
 
 	<select id="selectByName" parameterType="java.lang.String"
 		resultMap="strategyResultMap">

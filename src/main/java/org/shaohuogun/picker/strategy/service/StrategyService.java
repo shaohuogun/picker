@@ -35,6 +35,17 @@ public class StrategyService {
 		return strategyDao.selectById(id);
 	}
 	
+	public Strategy deleteStrategy(String id) throws Exception {
+		if ((id == null) || id.isEmpty()) {
+			throw new IllegalArgumentException("Strategy's id cann't be null or empty.");
+		}
+		
+		Strategy strategy = strategyDao.selectById(id);
+		strategy.setDeleted(Model.DELETED_YES);
+		strategyDao.update(strategy);
+		return strategy;
+	}
+	
 	public Strategy getStrategyByName(String name) throws Exception {
 		if ((name == null) || name.isEmpty()) {
 			throw new IllegalArgumentException("Strategy's name cann't be null or empty.");

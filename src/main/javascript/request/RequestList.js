@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FlatButton from 'material-ui/FlatButton';
 import {Card, CardHeader, CardText, CardActions} from 'material-ui/Card';
+import {ListItem, List} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Pagination from 'material-ui-pagination';
 
@@ -14,54 +15,72 @@ const toolbarStyle = {
 	textAlign: 'center',
 };
 
-export class StrategyListItem extends React.Component {
+export class RequestListItem extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			result: {},
 		};
 	}
 
-	deleteStrategy = (strategyId) => {
+	handleExpandChange(newExpandedState) {
+		if (!newExpandedState) {
+			return;
+		}
+
+    var self = this;
+    $.ajax({
+      url: "/api/result/" + self.props.request.resultId,
+			type: "GET",
+			data: {},
+    }).then(function(data) {
+      self.setState({
+        result: data,
+      });
+    });
+  }
+
+	redoRequest = (requestId) => {
 		var self = this;
 		$.ajax({
-			url: "/api/strategy/" + strategyId,
-			type: "DELETE",
+			url: "/api/request/" + requestId + "/redo",
+			type: "GET",
 		  data: {},
 		}).then(function(data) {
-			
+
 		});
   }
 
 	render() {
-		var strategy = this.props.strategy;
+		var request = this.props.request;
+		var actions = [];
+		if ((request.status == "suspended") || (request.status == "error")) {
+			actions.push(
+				<CardActions style={actionStyle}>
+				<FlatButton
+				label="重新执行"
+				secondary={true}
+				onTouchTap={this.redoRequest.bind(this, request.id)}
+				/>
+				</CardActions>
+			);
+		}
+
 		return (
 			<Card
 			{...this.props}
 			zDepth={0}
+			onExpandChange={this.handleExpandChange.bind(this)}
 			>
 			<CardHeader
-			title={strategy.name}
-			subtitle={strategy.urlRegex}
+			title={request.targetUrl}
+			subtitle={<span>类型：{request.targetType}   状态：{request.status}   开始：{request.startTime}   结束：{request.endTime}</span>}
 			actAsExpander={true}
 			showExpandableButton={true}
 			/>
-			<CardActions style={actionStyle}>
-			<FlatButton
-			label="删除"
-			secondary={true}
-			onTouchTap={this.deleteStrategy.bind(this, strategy.id)}
-			/>
-			</CardActions>
+			{actions}
 			<CardText expandable={true}>
-			<textarea
-			style={{
-				width: '100%',
-				height: '200px',
-				border:'none',
-			}}
-			>
-			{strategy.xml}
-			</textarea>
+			{this.state.result.json}
 			</CardText>
 			</Card>
 		);
@@ -69,12 +88,12 @@ export class StrategyListItem extends React.Component {
 
 };
 
-StrategyListItem.propTypes = {
-	strategy: PropTypes.object.isRequired,
+RequestListItem.propTypes = {
+	request: PropTypes.object.isRequired,
 };
 
 
-export default class StrategyList extends React.Component {
+export default class RequestList extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -85,7 +104,7 @@ export default class StrategyList extends React.Component {
 	loadPagination = (page) => {
 		var self = this;
 		$.ajax({
-			url: "/api/strategies",
+			url: "/api/requests",
 			type: "GET",
 			data: {
 				page: page.toString(),
@@ -101,32 +120,32 @@ export default class StrategyList extends React.Component {
 		this.loadPagination(1);
 	}
 
-	handleItemCLick = (strategyId) => {
+	handleItemCLick = (requestId) => {
 
 	}
 
 	render() {
-		var strategies = this.state.pagination.objects;
-		if (strategies == null) {
+		var requests = this.state.pagination.objects;
+		if (requests == null) {
 			return (<Card {...this.props} zDepth={1}></Card>);
 		}
 
 		var rows = [];
-		var strategyCount = strategies.length;
-		for (var i = 0; i < strategyCount; i++) {
-			var strategy = strategies[i];
+		var requestCount = requests.length;
+		for (var i = 0; i < requestCount; i++) {
+			var request = requests[i];
 			rows.push(
-				<StrategyListItem strategy={strategy} />
+				<RequestListItem request={request} />
 			);
 
-			if (i < (strategyCount - 1)) {
+			if (i < (requestCount - 1)) {
 				rows.push(<Divider />);
 			}
 		}
 
 		return (
 			<Card {...this.props} zDepth={1}>
-			<CardHeader title="策略列表" />
+			<CardHeader title="需求列表" />
 			<CardText>
 			{rows}
 			</CardText>
@@ -144,5 +163,5 @@ export default class StrategyList extends React.Component {
 
 };
 
-StrategyList.propTypes = {
+RequestList.propTypes = {
 };

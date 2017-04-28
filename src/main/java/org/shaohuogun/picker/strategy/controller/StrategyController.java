@@ -31,6 +31,11 @@ public class StrategyController extends Controller {
 		return strategyService.getStrategy(id);
 	}
 	
+	@RequestMapping(value = "/api/strategy/{id}", method = RequestMethod.DELETE)
+	public Strategy deleteStrategy(@PathVariable String id) throws Exception {
+		return strategyService.deleteStrategy(id);
+	}
+	
 	@RequestMapping(value = "/api/strategies", method = RequestMethod.GET)
 	public Pagination getStrategies(@RequestParam(defaultValue = "1", required = false) int page) throws Exception {
 		String creator = "a11039eb-4ba1-441a-bfdb-0d40f61a53dd";

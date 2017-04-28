@@ -1,6 +1,10 @@
 package org.shaohuogun.picker.request.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
+import org.shaohuogun.common.Model;
 import org.shaohuogun.picker.request.model.Request;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +31,16 @@ public class RequestDao {
 
 	public void update(Request request) {
 		sqlSession.update("org.shaohuogun.picker.request.dao.RequestMapper.update", request);
+	}
+	
+	public int countByCreator(String creator) {
+		return sqlSession.selectOne("org.shaohuogun.picker.request.dao.RequestMapper.countByCreator", creator);
+	}
+
+	public List<Model> selectByCreator(String creator, int offset, int limit) {
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return sqlSession.selectList("org.shaohuogun.picker.request.dao.RequestMapper.selectByCreator", creator,
+				rowBounds);
 	}
 
 }

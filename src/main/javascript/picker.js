@@ -8,6 +8,7 @@ import AppBar from 'material-ui/AppBar';
 
 import PortalPage from './portal/PortalPage';
 import StrategyPage from './strategy/StrategyPage';
+import RequestPage from './request/RequestPage';
 
 // Needed for onTouchTap
 injectTapEventPlugin();
@@ -35,6 +36,7 @@ export class Layout extends React.Component {
       <ul>
       <li><CustomLink activeOnlyWhenExact={true} to="/" label="首页"/></li>
       <li><CustomLink to="/strategy" label="策略"/></li>
+      <li><CustomLink to="/request" label="需求"/></li>
       </ul>
       {this.props.children}
       </div>
@@ -56,6 +58,7 @@ export default class Picker extends React.Component {
       <Layout>
       <Route exact path="/" component={PortalPage}/>
       <Route path="/strategy" component={StrategyPage}/>
+      <Route path="/request" component={RequestPage}/>
       </Layout>
       </Router>
     );

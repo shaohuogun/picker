@@ -56,5 +56,18 @@
 		= #{endTime} where id =
 		#{id}
 	</update>
+
+	<select id="countByCreator" parameterType="java.lang.String"
+		resultType="java.lang.Integer">
+		select count(*) from PICKER_REQUEST where deleted = '0' and creator
+		= #{creator}
+	</select>
+
+	<select id="selectByCreator" parameterType="java.lang.String"
+		resultMap="requestResultMap">
+		select * from PICKER_REQUEST where deleted = '0' and creator
+		= #{creator} order by create_date desc
+	</select>	
+	
 </mapper>
 
