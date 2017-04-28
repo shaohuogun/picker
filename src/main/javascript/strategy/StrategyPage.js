@@ -7,14 +7,14 @@ import StrategyList from './StrategyList';
 import StrategyForm from './StrategyForm';
 
 const leftStyle = {
-  width: 350,
+  width: 800,
   marginLeft: 20,
   float: 'left',
   display: 'inline-block',
 };
 
 const rightStyle = {
-  width: 800,
+  width: 350,
   marginLeft: 10,
   float: 'left',
   display: 'inline-block',

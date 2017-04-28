@@ -6,9 +6,51 @@ import {ListItem, List} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Pagination from 'material-ui-pagination';
 
-const paginationStyle = {
+const toolbarStyle = {
 	textAlign: 'center',
 };
+
+export class StrategyListItem extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+		};
+	}
+
+	render() {
+		var strategy = this.props.strategy;
+		return (
+			<Card
+			{...this.props}
+			zDepth={0}
+			>
+			<CardHeader
+			title={strategy.name}
+			subtitle={strategy.urlRegex}
+			actAsExpander={true}
+			showExpandableButton={true}
+			/>
+			<CardText expandable={true}>
+			<textarea
+			style={{
+				width: '100%',
+				height: '200px',
+				border:'none',
+			}}
+			>
+			{strategy.xml}
+			</textarea>
+			</CardText>
+			</Card>
+		);
+	}
+
+};
+
+StrategyListItem.propTypes = {
+	strategy: PropTypes.object.isRequired,
+};
+
 
 export default class StrategyList extends React.Component {
 	constructor(props) {
@@ -52,10 +94,7 @@ export default class StrategyList extends React.Component {
 		for (var i = 0; i < strategyCount; i++) {
 			var strategy = strategies[i];
 			rows.push(
-        <ListItem
-        primaryText={strategy.name}
-        onTouchTap={this.handleItemCLick.bind(this, strategy.id)}
-        />
+				<StrategyListItem strategy={strategy} />
 			);
 
 			if (i < (strategyCount - 1)) {
@@ -67,11 +106,9 @@ export default class StrategyList extends React.Component {
 			<Card {...this.props} zDepth={1}>
 			<CardHeader title="策略列表" />
 			<CardText>
-			<List>
 			{rows}
-			</List>
 			</CardText>
-			<CardActions style={paginationStyle}>
+			<CardActions style={toolbarStyle}>
 			<Pagination
 			total = {this.state.pagination.pageCount}
 			current = {this.state.pagination.pageIndex}

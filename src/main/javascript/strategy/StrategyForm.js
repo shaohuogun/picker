@@ -71,7 +71,11 @@ export default class StrategyForm extends React.Component {
 
   render() {
     return (
-      <Card style={strategyFormStyle} expanded={this.state.expanded} onExpandChange={this.handleExpandChange}>
+      <Card
+      {...this.props}
+      expanded={this.state.expanded}
+      onExpandChange={this.handleExpandChange}
+      >
       <CardHeader
       title="新增采集策略"
       actAsExpander={true}
