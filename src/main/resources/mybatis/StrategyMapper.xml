@@ -13,15 +13,17 @@
 		<result property="lastModifyDate" column="last_modify_date" />
 		<result property="deleted" column="deleted" />
 		<result property="name" column="name" />
-		<result property="urlRegex" column="url_regex" />		
+		<result property="urlRegex" column="url_regex" />
 		<result property="xml" column="xml"
 			typeHandler="org.shaohuogun.picker.plugin.ibatis.BlobTypeHandler" />
 	</resultMap>
 
 	<insert id="insert" parameterType="org.shaohuogun.picker.strategy.model.Strategy">
-		insert into PICKER_STRATEGY (id,
+		insert into PICKER_STRATEGY
+		(id,
 		creator, create_date, deleted, name, url_regex, xml)
-		values (#{id}, #{creator},
+		values (#{id},
+		#{creator},
 		#{createDate}, #{deleted}, #{name}, #{urlRegex},
 		#{xml})
 	</insert>
@@ -30,7 +32,7 @@
 		resultMap="strategyResultMap">
 		select * from PICKER_STRATEGY where id = #{id}
 	</select>
-	
+
 	<update id="update" parameterType="org.shaohuogun.picker.strategy.model.Strategy"
 		flushCache="true">
 		update
@@ -38,34 +40,40 @@
 		last_modify_date =
 		#{lastModifyDate}, deleted = #{deleted}
 		where
-		id = #{id}
+		id =
+		#{id}
 	</update>
 
 	<select id="selectByName" parameterType="java.lang.String"
 		resultMap="strategyResultMap">
-		select * from PICKER_STRATEGY where deleted = '0' and name = #{name}
+		select * from PICKER_STRATEGY where deleted = '0' and name =
+		#{name}
 	</select>
-	
+
 	<select id="selectAll" resultMap="strategyResultMap">
-		select * from PICKER_STRATEGY where deleted = '0'
-	</select>	
-	
+		select * from PICKER_STRATEGY
+		where deleted = '0'
+	</select>
+
 	<select id="selectFresh" parameterType="java.util.Date"
 		resultMap="strategyResultMap">
-		select * from PICKER_STRATEGY where deleted = '0' and create_date > #{refreshTime}
+		select * from PICKER_STRATEGY where deleted = '0' and
+		create_date > #{refreshTime}
 	</select>
 
 	<select id="countByCreator" parameterType="java.lang.String"
 		resultType="java.lang.Integer">
-		select count(*) from PICKER_STRATEGY where deleted = '0' and creator
+		select count(*) from PICKER_STRATEGY where deleted = '0'
+		and creator
 		= #{creator}
 	</select>
 
 	<select id="selectByCreator" parameterType="java.lang.String"
 		resultMap="strategyResultMap">
-		select * from PICKER_STRATEGY where deleted = '0' and creator
+		select * from PICKER_STRATEGY where deleted = '0' and
+		creator
 		= #{creator} order by create_date desc
 	</select>
-		
+
 </mapper>
 

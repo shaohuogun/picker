@@ -5,8 +5,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.shaohuogun.picker.request.dao.RequestMapper">
-	<resultMap id="requestResultMap"
-		type="org.shaohuogun.picker.request.model.Request">
+	<resultMap id="requestResultMap" type="org.shaohuogun.picker.request.model.Request">
 		<id property="id" column="id" />
 		<result property="creator" column="creator" />
 		<result property="createDate" column="create_date" />
@@ -23,13 +22,16 @@
 	</resultMap>
 
 	<insert id="insert" parameterType="org.shaohuogun.picker.request.model.Request">
-		insert into PICKER_REQUEST (id,
+		insert into PICKER_REQUEST
+		(id,
 		creator,
 		create_date, deleted, target_url, target_type,
-		batch_no, status)
+		batch_no,
+		status)
 		values
 		(#{id}, #{creator},
-		#{createDate}, #{deleted}, #{targetUrl}, #{targetType},
+		#{createDate}, #{deleted},
+		#{targetUrl}, #{targetType},
 		#{batchNo}, #{status})
 	</insert>
 
@@ -40,7 +42,8 @@
 
 	<select id="selectByStatus" parameterType="java.lang.String"
 		resultMap="requestResultMap">
-		select * from PICKER_REQUEST where deleted = '0' and status =
+		select * from PICKER_REQUEST where deleted = '0' and status
+		=
 		#{status} order by create_date asc limit 1
 	</select>
 
@@ -50,16 +53,19 @@
 		set last_modifier = #{lastModifier},
 		last_modify_date =
 		#{lastModifyDate}, deleted = #{deleted}, result_id
-		= #{resultId}, status =
+		=
+		#{resultId}, status =
 		#{status},
 		start_time = #{startTime}, end_time
-		= #{endTime} where id =
+		=
+		#{endTime} where id =
 		#{id}
 	</update>
 
 	<select id="countByCreator" parameterType="java.lang.String"
 		resultType="java.lang.Integer">
-		select count(*) from PICKER_REQUEST where deleted = '0' and creator
+		select count(*) from PICKER_REQUEST where deleted = '0' and
+		creator
 		= #{creator}
 	</select>
 
@@ -67,7 +73,7 @@
 		resultMap="requestResultMap">
 		select * from PICKER_REQUEST where deleted = '0' and creator
 		= #{creator} order by create_date desc
-	</select>	
-	
+	</select>
+
 </mapper>
 
