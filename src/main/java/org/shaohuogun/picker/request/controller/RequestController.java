@@ -84,11 +84,11 @@ public class RequestController extends Controller {
 	public Pagination getRequests(@RequestParam(defaultValue = "1", required = false) int page) throws Exception {
 		String creator = "41f98331-11b4-4b70-8ab3-b2b3332324b5";
 
-		int total = requestService.getRequestCountByCreator(creator);
+		int total = requestService.getRequestCountOfCreator(creator);
 		Pagination pagination = new Pagination();
 		pagination.setTotal(total);
 		pagination.setPageIndex(page);
-		return requestService.getRequestsByCreator(creator, pagination);
+		return requestService.getRequestsOfCreator(creator, pagination);
 	}	
 
 	@RequestMapping(value = "/api/request/{id}/redo", method = RequestMethod.GET)

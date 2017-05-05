@@ -61,7 +61,7 @@ public class RequestService {
 		return requestDao.selectById(request.getId());
 	}
 	
-	public int getRequestCountByCreator(String creator) throws Exception {
+	public int getRequestCountOfCreator(String creator) throws Exception {
 		if ((creator == null) || creator.isEmpty()) {
 			throw new IllegalArgumentException("Creator cann't be null or empty.");
 		}
@@ -69,7 +69,7 @@ public class RequestService {
 		return requestDao.countByCreator(creator);
 	}
 	
-	public Pagination getRequestsByCreator(String creator, Pagination pagination) throws Exception {
+	public Pagination getRequestsOfCreator(String creator, Pagination pagination) throws Exception {
 		if ((creator == null) || creator.isEmpty()) {
 			throw new IllegalArgumentException("Creator cann't be null or empty.");
 		}

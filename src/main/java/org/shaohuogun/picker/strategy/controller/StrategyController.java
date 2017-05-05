@@ -40,11 +40,11 @@ public class StrategyController extends Controller {
 	public Pagination getStrategies(@RequestParam(defaultValue = "1", required = false) int page) throws Exception {
 		String creator = "a11039eb-4ba1-441a-bfdb-0d40f61a53dd";
 
-		int total = strategyService.getStrategyCountByCreator(creator);
+		int total = strategyService.getStrategyCountOfCreator(creator);
 		Pagination pagination = new Pagination();
 		pagination.setTotal(total);
 		pagination.setPageIndex(page);
-		return strategyService.getStrategiesByCreator(creator, pagination);
+		return strategyService.getStrategiesOfCreator(creator, pagination);
 	}
 	
 }

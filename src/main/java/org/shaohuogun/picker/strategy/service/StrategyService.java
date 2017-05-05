@@ -66,7 +66,7 @@ public class StrategyService {
 		return strategyDao.selectFresh(refreshTime);
 	}
 	
-	public int getStrategyCountByCreator(String creator) throws Exception {
+	public int getStrategyCountOfCreator(String creator) throws Exception {
 		if ((creator == null) || creator.isEmpty()) {
 			throw new IllegalArgumentException("Creator cann't be null or empty.");
 		}
@@ -74,7 +74,7 @@ public class StrategyService {
 		return strategyDao.countByCreator(creator);
 	}
 	
-	public Pagination getStrategiesByCreator(String creator, Pagination pagination) throws Exception {
+	public Pagination getStrategiesOfCreator(String creator, Pagination pagination) throws Exception {
 		if ((creator == null) || creator.isEmpty()) {
 			throw new IllegalArgumentException("Creator cann't be null or empty.");
 		}
