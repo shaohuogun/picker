@@ -3,7 +3,7 @@
 
 <strategy>
 
-	<string xpath="//div[@id='article_content']" jsonKey="content" />
+	<string xpath="//div[@id='article_content']" type="xml" jsonKey="content" />
 
 </strategy>
  

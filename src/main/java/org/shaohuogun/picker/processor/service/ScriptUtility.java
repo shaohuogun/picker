@@ -14,7 +14,7 @@ public abstract class ScriptUtility {
 		}
 		
 		if ((param == null) || param.isEmpty()) {
-			throw new IllegalArgumentException("Script cann't be null or empty.");
+			throw new IllegalArgumentException("Param cann't be null or empty.");
 		}
 		
 		ScriptEngineManager manager = new ScriptEngineManager();

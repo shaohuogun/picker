@@ -22,16 +22,21 @@ public abstract class PickerUtility {
 		if (domElement == null) {
 			throw new NullPointerException("Page's DOM data structure doesn't have expected node.");
 		}
-		
+
 		if (stringTag == null) {
 			throw new NullPointerException("StringTag cann't be null.");
 		}
 
 		String result = null;
 		String attribute = stringTag.getAttribute();
+		String type = stringTag.getType();
 		String handler = stringTag.getHandler();
 		if ((attribute == null) || attribute.isEmpty()) {
-			result = domElement.asText();
+			if (StringTag.TYPE_TEXT.equalsIgnoreCase(type)) {
+				result = domElement.asText();
+			} else if (StringTag.TYPE_XML.equalsIgnoreCase(type)) {
+				result = domElement.asXml();
+			}
 		} else {
 			result = domElement.getAttribute(attribute);
 		}
