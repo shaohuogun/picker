@@ -24,15 +24,20 @@
   },
   "homepage": "https://github.com/shaohuogun/picker#readme",
   "dependencies": {
+    "humps": "^2.0.0",
     "material-ui": "^0.17.3",
+    "normalizr": "^3.2.2",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-redux": "^5.0.4",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
+    "react-router-redux": "^4.0.8",
     "react-tap-event-plugin": "^2.0.1",
-    "redux": "^3.6.0"
+    "react-thunk": "^1.0.0",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
