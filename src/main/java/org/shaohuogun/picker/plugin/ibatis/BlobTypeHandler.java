@@ -30,10 +30,11 @@ public class BlobTypeHandler extends BaseTypeHandler<String> {
 	@Override
 	public String getNullableResult(ResultSet rs, String columnName) throws SQLException {
 		Blob blob = rs.getBlob(columnName);
-		byte[] returnValue = null;
-		if (null != blob) {
-			returnValue = blob.getBytes(1, (int) blob.length());
+		if (null == blob) {
+			return null;
 		}
+		
+		byte[] returnValue = blob.getBytes(1, (int) blob.length());
 		try {
 			return new String(returnValue, DEFAULT_CHARSET);
 		} catch (UnsupportedEncodingException e) {
@@ -44,10 +45,11 @@ public class BlobTypeHandler extends BaseTypeHandler<String> {
 	@Override
 	public String getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
 		Blob blob = rs.getBlob(columnIndex);
-		byte[] returnValue = null;
-		if (null != blob) {
-			returnValue = blob.getBytes(1, (int) blob.length());
+		if (null == blob) {
+			return null;
 		}
+		
+		byte[] returnValue = blob.getBytes(1, (int) blob.length());
 		try {
 			return new String(returnValue, DEFAULT_CHARSET);
 		} catch (UnsupportedEncodingException e) {
@@ -58,10 +60,11 @@ public class BlobTypeHandler extends BaseTypeHandler<String> {
 	@Override
 	public String getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
 		Blob blob = cs.getBlob(columnIndex);
-		byte[] returnValue = null;
-		if (null != blob) {
-			returnValue = blob.getBytes(1, (int) blob.length());
+		if (null == blob) {
+			return null;
 		}
+		
+		byte[] returnValue = blob.getBytes(1, (int) blob.length());
 		try {
 			return new String(returnValue, DEFAULT_CHARSET);
 		} catch (UnsupportedEncodingException e) {
