@@ -5,7 +5,7 @@ import java.util.List;
 import org.shaohuogun.common.Model;
 import org.shaohuogun.common.Pagination;
 import org.shaohuogun.picker.request.dao.RequestDao;
-import org.shaohuogun.picker.request.model.Request;
+import org.shaohuogun.picker.request.model.AsyncRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +17,7 @@ public class RequestService {
 	private RequestDao requestDao;
 
 	@Transactional
-	public Request createRequest(Request request) throws Exception {
+	public AsyncRequest createRequest(AsyncRequest request) throws Exception {
 		if (request == null) {
 			throw new NullPointerException("Request cann't be null.");
 		}
@@ -26,7 +26,7 @@ public class RequestService {
 		return requestDao.selectById(request.getId());
 	}
 
-	public Request getRequest(String id) throws Exception {
+	public AsyncRequest getRequest(String id) throws Exception {
 		if ((id == null) || id.isEmpty()) {
 			throw new IllegalArgumentException("Request's id cann't be null or empty.");
 		}
@@ -34,7 +34,7 @@ public class RequestService {
 		return requestDao.selectById(id);
 	}
 
-	public List<Request> getRequests(Pagination pagination) throws Exception {
+	public List<AsyncRequest> getRequests(Pagination pagination) throws Exception {
 		if (pagination == null) {
 			throw new NullPointerException("Pagination cann't be null.");
 		}
@@ -43,7 +43,7 @@ public class RequestService {
 		return null;
 	}
 
-	public Request getRequestByStatus(String status) throws Exception {
+	public AsyncRequest getRequestByStatus(String status) throws Exception {
 		if ((status == null) || status.isEmpty()) {
 			throw new IllegalArgumentException("Status cann't be null or empty.");
 		}
@@ -52,7 +52,7 @@ public class RequestService {
 	}
 
 	@Transactional
-	public Request modifyRequest(Request request) throws Exception {
+	public AsyncRequest modifyRequest(AsyncRequest request) throws Exception {
 		if (request == null) {
 			throw new NullPointerException("Request cann't be null.");
 		}

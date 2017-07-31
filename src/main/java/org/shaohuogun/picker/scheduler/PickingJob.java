@@ -9,7 +9,7 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerContext;
 import org.shaohuogun.picker.plugin.quartz.QuartzConfig;
 import org.shaohuogun.picker.processor.service.ProcessorService;
-import org.shaohuogun.picker.request.model.Request;
+import org.shaohuogun.picker.request.model.AsyncRequest;
 import org.shaohuogun.picker.request.service.RequestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +37,7 @@ public class PickingJob implements Job {
 			SchedulerContext schedulerContext = scheduler.getContext();
 			ApplicationContext applicationContext = (ApplicationContext) schedulerContext.get("applicationContext");
 			RequestService requestService = (RequestService) applicationContext.getBean("requestService");
-			Request request = requestService.getRequestByStatus(Request.STATUS_INITIAL);
+			AsyncRequest request = requestService.getRequestByStatus(AsyncRequest.STATUS_INITIAL);
 			if (request == null) {
 				return;
 			}

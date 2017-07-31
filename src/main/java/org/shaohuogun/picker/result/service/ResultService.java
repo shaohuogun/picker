@@ -11,20 +11,16 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONObject;
 import org.shaohuogun.common.Utility;
-import org.shaohuogun.picker.request.model.Request;
+import org.shaohuogun.picker.request.model.AsyncRequest;
 import org.shaohuogun.picker.request.service.RequestService;
 import org.shaohuogun.picker.result.dao.ResultDao;
 import org.shaohuogun.picker.result.model.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ResultService {
-	
-	@Value("${reader.service.url}")
-	private String readerSeriveUrl;
 	
 	@Autowired
 	private RequestService requestService;
@@ -41,7 +37,7 @@ public class ResultService {
 		resultDao.insert(result);
 		return resultDao.selectById(result.getId());
 	}
-
+	
 	public Result getResult(String id) throws Exception {
 		if ((id == null) || id.isEmpty()) {
 			throw new IllegalArgumentException("Result's id cann't be null or empty.");
@@ -49,7 +45,7 @@ public class ResultService {
 
 		return resultDao.selectById(id);
 	}
-
+	
 	public Result getUnsentResult() {
 		return resultDao.selectBySent(Result.SENT_NOT);
 	}
@@ -69,15 +65,15 @@ public class ResultService {
 			throw new NullPointerException("Result cann't be null.");
 		}
 		
-		JSONObject jsonResult = new JSONObject(result.getJson());
-		Request request = requestService.getRequest(result.getRequestId());
-		jsonResult.put(Request.KEY_TARGET_URL, request.getTargetUrl());
-		jsonResult.put(Request.KEY_TARGET_TYPE, request.getTargetType());
-		jsonResult.put(Request.KEY_BATCH_NO, request.getBatchNo());
+		JSONObject jsonResp = new JSONObject();
+		AsyncRequest asyncReq = requestService.getRequest(result.getRequestId());
+		jsonResp.put(AsyncRequest.KEY_ACTION_TYPE, asyncReq.getActionType());
+		jsonResp.put(AsyncRequest.KEY_SERIAL_NUMBER, asyncReq.getSerialNumber());
+		jsonResp.put(AsyncRequest.KEY_CONTENT, result.getJson());
 
 		HttpClient httpClient = HttpClientBuilder.create().build();
-		HttpPost httpPost = new HttpPost(readerSeriveUrl);
-		StringEntity params = new StringEntity(jsonResult.toString(), Utility.ENCODE_UTF8);
+		HttpPost httpPost = new HttpPost(asyncReq.getHookUrl());
+		StringEntity params = new StringEntity(jsonResp.toString(), Utility.ENCODE_UTF8);
 		httpPost.addHeader("Content-Type", "application/json;charset=UTF-8");
 		httpPost.addHeader("Accept", "application/json");
 		httpPost.setEntity(params);

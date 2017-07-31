@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import org.shaohuogun.common.Controller;
 import org.shaohuogun.common.Pagination;
 import org.shaohuogun.common.Utility;
-import org.shaohuogun.picker.request.model.Request;
+import org.shaohuogun.picker.request.model.AsyncRequest;
 import org.shaohuogun.picker.request.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +27,7 @@ public class RequestController extends Controller {
 	private RequestService requestService;
 	
 	@RequestMapping(value = "/api/request", method = RequestMethod.POST)
-	public void createRequest(HttpServletRequest req) throws Exception {
+	public String createRequest(HttpServletRequest req) throws Exception {
 		req.setCharacterEncoding(Utility.ENCODE_UTF8);
 		StringBuffer sb = new StringBuffer();
 		InputStream is = req.getInputStream();
@@ -50,33 +50,36 @@ public class RequestController extends Controller {
 			throw new Exception("The picking request from [" + sb1.toString() + "]  is invalid.");
 		}
 		
-		JSONObject jsonRequest = new JSONObject(sb.toString());
-		Request request = new Request();
-		request.setId(Utility.getUUID());
-		request.setCreator("41f98331-11b4-4b70-8ab3-b2b3332324b5");
-		String targetUrl = jsonRequest.getString(Request.KEY_TARGET_URL);
-		String targetType = jsonRequest.getString(Request.KEY_TARGET_TYPE);
-		String batchNo = jsonRequest.getString(Request.KEY_BATCH_NO);
-		if ((targetUrl == null) || targetUrl.isEmpty()) {
-			throw new IllegalArgumentException("Target url cann't be null or empty.");
+		JSONObject jsonReq = new JSONObject(sb.toString());
+		AsyncRequest asyncReq = new AsyncRequest();
+		asyncReq.setId(Utility.getUUID());
+		asyncReq.setCreator("41f98331-11b4-4b70-8ab3-b2b3332324b5");
+		String actionType = jsonReq.getString(AsyncRequest.KEY_ACTION_TYPE);
+		String content = jsonReq.getString(AsyncRequest.KEY_CONTENT);
+		String hookUrl = jsonReq.getString(AsyncRequest.KEY_HOOK_URL);
+		
+		if ((actionType == null) || actionType.isEmpty()) {
+			throw new IllegalArgumentException("Action type cann't be null or empty.");
 		}
 
-		if ((targetType == null) || targetType.isEmpty()) {
-			throw new IllegalArgumentException("Target type cann't be null or empty.");
+		if ((content == null) || content.isEmpty()) {
+			throw new IllegalArgumentException("Content cann't be null or empty.");
 		}
-		
-		if ((batchNo == null) || batchNo.isEmpty()) {
-			throw new IllegalArgumentException("Batch no cann't be null or empty.");
+
+		if ((hookUrl == null) || hookUrl.isEmpty()) {
+			throw new IllegalArgumentException("Hook url cann't be null or empty.");
 		}
-		
-		request.setTargetUrl(targetUrl);
-		request.setTargetType(targetType);
-		request.setBatchNo(batchNo);	
-		requestService.createRequest(request);
+
+		asyncReq.setActionType(actionType);
+		asyncReq.setSerialNumber(Utility.getUUID());
+		asyncReq.setContent(content);
+		asyncReq.setHookUrl(hookUrl);
+		requestService.createRequest(asyncReq);
+		return asyncReq.getSerialNumber();
 	}
 	
 	@RequestMapping(value = "/api/request/{id}", method = RequestMethod.GET)
-	public Request getRequest(@PathVariable String id) throws Exception {
+	public AsyncRequest getRequest(@PathVariable String id) throws Exception {
 		return requestService.getRequest(id);
 	}
 	
@@ -92,15 +95,15 @@ public class RequestController extends Controller {
 	}	
 
 	@RequestMapping(value = "/api/request/{id}/redo", method = RequestMethod.GET)
-	public Request redoRequest(@PathVariable String id) throws Exception {
-		Request request = requestService.getRequest(id);
+	public AsyncRequest redoRequest(@PathVariable String id) throws Exception {
+		AsyncRequest request = requestService.getRequest(id);
 		if (request == null) {
 			throw new Exception("Invalid argument.");
 		}
 
 		request.setLastModifier("a11039eb-4ba1-441a-bfdb-0d40f61a53dd");
 		request.setLastModifyDate(new Date());
-		request.setStatus(Request.STATUS_INITIAL);
+		request.setStatus(AsyncRequest.STATUS_INITIAL);
 		return requestService.modifyRequest(request);
 	}
 

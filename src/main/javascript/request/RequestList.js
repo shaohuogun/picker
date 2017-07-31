@@ -73,8 +73,8 @@ export class RequestListItem extends React.Component {
 			onExpandChange={this.handleExpandChange.bind(this)}
 			>
 			<CardHeader
-			title={request.targetUrl}
-			subtitle={<span>类型：{request.targetType}   状态：{request.status}   开始：{request.startTime}   结束：{request.endTime}</span>}
+			title={request.content}
+			subtitle={<span>类型：{request.actionType}   状态：{request.status}   开始：{request.startTime}   结束：{request.endTime}</span>}
 			actAsExpander={true}
 			showExpandableButton={true}
 			/>
