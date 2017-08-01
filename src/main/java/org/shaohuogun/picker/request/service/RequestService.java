@@ -17,13 +17,13 @@ public class RequestService {
 	private RequestDao requestDao;
 
 	@Transactional
-	public AsyncRequest createRequest(AsyncRequest request) throws Exception {
-		if (request == null) {
+	public AsyncRequest createRequest(AsyncRequest req) throws Exception {
+		if (req == null) {
 			throw new NullPointerException("Request cann't be null.");
 		}
 
-		requestDao.insert(request);
-		return requestDao.selectById(request.getId());
+		requestDao.insert(req);
+		return requestDao.selectById(req.getId());
 	}
 
 	public AsyncRequest getRequest(String id) throws Exception {
@@ -52,13 +52,13 @@ public class RequestService {
 	}
 
 	@Transactional
-	public AsyncRequest modifyRequest(AsyncRequest request) throws Exception {
-		if (request == null) {
+	public AsyncRequest modifyRequest(AsyncRequest req) throws Exception {
+		if (req == null) {
 			throw new NullPointerException("Request cann't be null.");
 		}
 
-		requestDao.update(request);
-		return requestDao.selectById(request.getId());
+		requestDao.update(req);
+		return requestDao.selectById(req.getId());
 	}
 	
 	public int getRequestCountOfCreator(String creator) throws Exception {

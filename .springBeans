@@ -7,7 +7,7 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>java:org.shaohuogun.PickerApplication</config>
+		<config>java:org.shaohuogun.picker.PickerApplication</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

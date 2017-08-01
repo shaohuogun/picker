@@ -19,7 +19,7 @@ export class RequestListItem extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			result: {},
+			pagination: {},
 		};
 	}
 
@@ -30,12 +30,12 @@ export class RequestListItem extends React.Component {
 
     var self = this;
     $.ajax({
-      url: "/api/result/" + self.props.request.resultId,
+      url: "/api/request/" + self.props.request.id + "/results",
 			type: "GET",
 			data: {},
     }).then(function(data) {
       self.setState({
-        result: data,
+        pagination: data,
       });
     });
   }
@@ -80,7 +80,7 @@ export class RequestListItem extends React.Component {
 			/>
 			{actions}
 			<CardText expandable={true}>
-			{this.state.result.json}
+			{this.state.pagination.total}
 			</CardText>
 			</Card>
 		);

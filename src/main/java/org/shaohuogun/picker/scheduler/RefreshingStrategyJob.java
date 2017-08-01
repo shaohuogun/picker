@@ -30,7 +30,7 @@ public class RefreshingStrategyJob implements Job {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	@Value("${quartz.job.refreshing.strategy.repeat-interval}")
+	@Value("${quartz.job.repeat-interval.refreshing.strategy}")
 	private long repeatInterval;
 
 	@Override

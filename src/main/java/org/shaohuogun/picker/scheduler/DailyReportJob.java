@@ -21,7 +21,7 @@ public class DailyReportJob implements Job {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	@Value("${quartz.job.daily.report.cron-expression}")
+	@Value("${quartz.job.cron-expression.daily.report}")
 	private String cronExpression;
 
 	@Override

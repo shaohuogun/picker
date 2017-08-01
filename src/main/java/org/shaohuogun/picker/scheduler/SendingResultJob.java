@@ -26,7 +26,7 @@ public class SendingResultJob implements Job {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	@Value("${quartz.job.sending.resutl.repeat-interval}")
+	@Value("${quartz.job.repeat-interval.sending.resutl}")
 	private long repeatInterval;
 
 	@Override

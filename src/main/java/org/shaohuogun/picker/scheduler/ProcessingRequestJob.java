@@ -23,11 +23,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @DisallowConcurrentExecution
-public class PickingJob implements Job {
+public class ProcessingRequestJob implements Job {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	@Value("${quartz.job.picking.repeat-interval}")
+	@Value("${quartz.job.repeat-interval.processing.request}")
 	private long repeatInterval;
 
 	@Override
@@ -37,25 +37,25 @@ public class PickingJob implements Job {
 			SchedulerContext schedulerContext = scheduler.getContext();
 			ApplicationContext applicationContext = (ApplicationContext) schedulerContext.get("applicationContext");
 			RequestService requestService = (RequestService) applicationContext.getBean("requestService");
-			AsyncRequest request = requestService.getRequestByStatus(AsyncRequest.STATUS_INITIAL);
-			if (request == null) {
+			AsyncRequest asyncReq = requestService.getRequestByStatus(AsyncRequest.STATUS_INITIAL);
+			if (asyncReq == null) {
 				return;
 			}
-
+			
 			ProcessorService processorService = (ProcessorService) applicationContext.getBean("processorService");
-			processorService.process(request);
+			processorService.process(asyncReq);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
 	}
 
-	@Bean(name = "pickingBean")
-	public JobDetailFactoryBean pickingBean() {
+	@Bean(name = "processingRequestBean")
+	public JobDetailFactoryBean processingRequestBean() {
 		return QuartzConfig.createJobDetail(this.getClass());
 	}
 
-	@Bean(name = "pickingTrigger")
-	public SimpleTriggerFactoryBean pickingTrigger(@Qualifier("pickingBean") JobDetail jobDetail) {
+	@Bean(name = "processingRequestTrigger")
+	public SimpleTriggerFactoryBean processingRequestTrigger(@Qualifier("processingRequestBean") JobDetail jobDetail) {
 		return QuartzConfig.createSimpleTrigger(jobDetail, repeatInterval);
 	}
 

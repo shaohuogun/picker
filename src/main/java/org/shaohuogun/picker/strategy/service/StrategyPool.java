@@ -39,7 +39,7 @@ public class StrategyPool {
 		return refreshTime;
 	}
 
-	public String getSuitableStrategyId(String targetUrl) throws Exception {
+	public Strategy getSuitableStrategyId(String targetUrl) throws Exception {
 		if ((targetUrl == null) || targetUrl.isEmpty()) {
 			throw new IllegalArgumentException("Target url cann't be null or empty.");
 		}
@@ -49,7 +49,7 @@ public class StrategyPool {
 			Pattern pattern = Pattern.compile(curStrategy.getUrlRegex());
 			Matcher matcher = pattern.matcher(targetUrl);
 			if (matcher.find()) {
-				return curStrategy.getId();
+				return curStrategy;
 			}
 		}
 		

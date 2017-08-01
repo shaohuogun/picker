@@ -96,15 +96,15 @@ public class RequestController extends Controller {
 
 	@RequestMapping(value = "/api/request/{id}/redo", method = RequestMethod.GET)
 	public AsyncRequest redoRequest(@PathVariable String id) throws Exception {
-		AsyncRequest request = requestService.getRequest(id);
-		if (request == null) {
+		AsyncRequest asyncReq = requestService.getRequest(id);
+		if (asyncReq == null) {
 			throw new Exception("Invalid argument.");
 		}
 
-		request.setLastModifier("a11039eb-4ba1-441a-bfdb-0d40f61a53dd");
-		request.setLastModifyDate(new Date());
-		request.setStatus(AsyncRequest.STATUS_INITIAL);
-		return requestService.modifyRequest(request);
+		asyncReq.setLastModifier("a11039eb-4ba1-441a-bfdb-0d40f61a53dd");
+		asyncReq.setLastModifyDate(new Date());
+		asyncReq.setStatus(AsyncRequest.STATUS_INITIAL);
+		return requestService.modifyRequest(asyncReq);
 	}
 
 }
