@@ -77,12 +77,12 @@ public class ResultService {
 		httpPost.addHeader("Content-Type", "application/json;charset=UTF-8");
 		httpPost.addHeader("Accept", "application/json");
 		httpPost.setEntity(params);
-		HttpResponse httpResponse = httpClient.execute(httpPost);
+		HttpResponse httpResp = httpClient.execute(httpPost);
 		
-		StatusLine statusLine = httpResponse.getStatusLine();
+		StatusLine statusLine = httpResp.getStatusLine();
 		int statusCode = statusLine.getStatusCode();
 		if (statusCode != HttpStatus.SC_OK) {
-			throw new Exception("Fail to send result back to the client.");
+			throw new Exception("Fail to send result back to the client, status code: " + statusCode);
 		}
 		
 		result.setLastModifyDate(new Date());

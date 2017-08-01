@@ -51,13 +51,9 @@ public class RequestController extends Controller {
 		}
 		
 		JSONObject jsonReq = new JSONObject(sb.toString());
-		AsyncRequest asyncReq = new AsyncRequest();
-		asyncReq.setId(Utility.getUUID());
-		asyncReq.setCreator("41f98331-11b4-4b70-8ab3-b2b3332324b5");
 		String actionType = jsonReq.getString(AsyncRequest.KEY_ACTION_TYPE);
 		String content = jsonReq.getString(AsyncRequest.KEY_CONTENT);
 		String hookUrl = jsonReq.getString(AsyncRequest.KEY_HOOK_URL);
-		
 		if ((actionType == null) || actionType.isEmpty()) {
 			throw new IllegalArgumentException("Action type cann't be null or empty.");
 		}
@@ -69,9 +65,13 @@ public class RequestController extends Controller {
 		if ((hookUrl == null) || hookUrl.isEmpty()) {
 			throw new IllegalArgumentException("Hook url cann't be null or empty.");
 		}
-
+		
+		String uuid = Utility.getUUID();
+		AsyncRequest asyncReq = new AsyncRequest();
+		asyncReq.setId(uuid);
+		asyncReq.setCreator("41f98331-11b4-4b70-8ab3-b2b3332324b5");
 		asyncReq.setActionType(actionType);
-		asyncReq.setSerialNumber(Utility.getUUID());
+		asyncReq.setSerialNumber(uuid);
 		asyncReq.setContent(content);
 		asyncReq.setHookUrl(hookUrl);
 		requestService.createRequest(asyncReq);

@@ -45,7 +45,6 @@ CREATE TABLE `PICKER_ASYNC_REQUEST` (
   `status` varchar(16) NOT NULL,
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL, 
-  `result_id` char(36) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

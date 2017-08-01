@@ -20,7 +20,6 @@
 		<result property="status" column="status" />
 		<result property="startTime" column="start_time" />
 		<result property="endTime" column="end_time" />
-		<result property="resultId" column="result_id" />
 	</resultMap>
 
 	<insert id="insert" parameterType="org.shaohuogun.picker.request.model.AsyncRequest">
@@ -64,9 +63,7 @@
 		#{status},
 		start_time = #{startTime}, end_time
 		=
-		#{endTime}, result_id
-		=
-		#{resultId} where id =
+		#{endTime} where id =
 		#{id}
 	</update>
 

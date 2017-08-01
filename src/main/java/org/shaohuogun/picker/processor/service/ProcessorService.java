@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 public class ProcessorService {
 	
 	private static final String KEY_URL = "url";
+	private static final String KEY_AMOUNT = "amount";
 
 	@Autowired
 	private RequestService requestService;
@@ -44,7 +45,7 @@ public class ProcessorService {
 			if ((targetUrl == null) || targetUrl.isEmpty()) {
 				throw new Exception("Target url is empty.");
 			}
-			
+
 			String strategyId = StrategyPool.getInstance().getSuitableStrategyId(targetUrl);
 			if ((strategyId == null) || strategyId.isEmpty()) {
 				throw new Exception("Cann't find a suitable strategy.");				
@@ -52,17 +53,32 @@ public class ProcessorService {
 			
 			Strategy strategy = strategyService.getStrategy(strategyId);
 			StrategyTag strategyTag = StrategyTag.parse(strategy.getXml());
-			JSONObject jsonResult = PickerUtility.pickPage(targetUrl, strategyTag);
 			
-			Result result = new Result();
-			result.setId(Utility.getUUID());
-			result.setCreator(req.getCreator());
-			result.setRequestId(req.getId());
-			result.setStrategyId(strategyId);
-			result.setJson(jsonResult.toString());
-			resultService.createResult(result);
-
-			req.setResultId(result.getId());
+			int amount = jsonContent.getInt(KEY_AMOUNT);
+			if (amount > 1) {
+				for (int i = 0; i < amount; i++) {
+					JSONObject jsonResult = PickerUtility.pickPage((targetUrl + i), strategyTag);
+					
+					Result result = new Result();
+					result.setId(Utility.getUUID());
+					result.setCreator(req.getCreator());
+					result.setRequestId(req.getId());
+					result.setStrategyId(strategyId);
+					result.setJson(jsonResult.toString());
+					resultService.createResult(result);					
+				}			
+			} else {
+				JSONObject jsonResult = PickerUtility.pickPage(targetUrl, strategyTag);
+				
+				Result result = new Result();
+				result.setId(Utility.getUUID());
+				result.setCreator(req.getCreator());
+				result.setRequestId(req.getId());
+				result.setStrategyId(strategyId);
+				result.setJson(jsonResult.toString());
+				resultService.createResult(result);					
+			}
+			
 			req.setStatus(AsyncRequest.STATUS_CLOSED);
 			req.setEndTime(new Date());
 			requestService.modifyRequest(req);

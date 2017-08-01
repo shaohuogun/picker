@@ -33,8 +33,6 @@ public class AsyncRequest extends Model {
 
 	private Date endTime;
 
-	private String resultId;
-
 	public String getActionType() {
 		return actionType;
 	}
@@ -89,14 +87,6 @@ public class AsyncRequest extends Model {
 
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
-	}
-	
-	public String getResultId() {
-		return resultId;
-	}
-
-	public void setResultId(String resultId) {
-		this.resultId = resultId;
-	}
+	}	
 
 }
