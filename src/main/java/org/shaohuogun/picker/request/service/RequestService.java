@@ -5,7 +5,7 @@ import java.util.List;
 import org.shaohuogun.common.Model;
 import org.shaohuogun.common.Pagination;
 import org.shaohuogun.picker.request.dao.RequestDao;
-import org.shaohuogun.picker.request.model.AsyncRequest;
+import org.shaohuogun.picker.request.model.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +17,7 @@ public class RequestService {
 	private RequestDao requestDao;
 
 	@Transactional
-	public AsyncRequest createRequest(AsyncRequest req) throws Exception {
+	public Request createRequest(Request req) throws Exception {
 		if (req == null) {
 			throw new NullPointerException("Request cann't be null.");
 		}
@@ -26,7 +26,7 @@ public class RequestService {
 		return requestDao.selectById(req.getId());
 	}
 
-	public AsyncRequest getRequest(String id) throws Exception {
+	public Request getRequest(String id) throws Exception {
 		if ((id == null) || id.isEmpty()) {
 			throw new IllegalArgumentException("Request's id cann't be null or empty.");
 		}
@@ -34,7 +34,7 @@ public class RequestService {
 		return requestDao.selectById(id);
 	}
 
-	public List<AsyncRequest> getRequests(Pagination pagination) throws Exception {
+	public List<Request> getRequests(Pagination pagination) throws Exception {
 		if (pagination == null) {
 			throw new NullPointerException("Pagination cann't be null.");
 		}
@@ -43,7 +43,7 @@ public class RequestService {
 		return null;
 	}
 
-	public AsyncRequest getRequestByStatus(String status) throws Exception {
+	public Request getRequestByStatus(String status) throws Exception {
 		if ((status == null) || status.isEmpty()) {
 			throw new IllegalArgumentException("Status cann't be null or empty.");
 		}
@@ -52,7 +52,7 @@ public class RequestService {
 	}
 
 	@Transactional
-	public AsyncRequest modifyRequest(AsyncRequest req) throws Exception {
+	public Request modifyRequest(Request req) throws Exception {
 		if (req == null) {
 			throw new NullPointerException("Request cann't be null.");
 		}

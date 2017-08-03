@@ -4,8 +4,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.shaohuogun.picker.result.dao.ResultMapper">
-	<resultMap id="resultResultMap" type="org.shaohuogun.picker.result.model.Result">
+<mapper namespace="org.shaohuogun.picker.reply.dao.ReplyMapper">
+	<resultMap id="replyResultMap" type="org.shaohuogun.picker.reply.model.Reply">
 		<id property="id" column="id" />
 		<result property="creator" column="creator" />
 		<result property="createDate" column="create_date" />
@@ -14,48 +14,48 @@
 		<result property="deleted" column="deleted" />
 		<result property="requestId" column="request_id" />
 		<result property="strategyId" column="strategy_id" />
-		<result property="json" column="json"
+		<result property="content" column="content"
 			typeHandler="org.shaohuogun.picker.plugin.ibatis.BlobTypeHandler" />
 		<result property="sent" column="sent" />
 	</resultMap>
 
-	<insert id="insert" parameterType="org.shaohuogun.picker.result.model.Result">
-		insert into PICKER_RESULT (id,
-		creator, create_date, deleted, request_id, strategy_id, json, sent)
+	<insert id="insert" parameterType="org.shaohuogun.picker.reply.model.Reply">
+		insert into PICKER_REPLY (id,
+		creator, create_date, deleted, request_id, strategy_id, content, sent)
 		values (#{id},
 		#{creator},
 		#{createDate}, #{deleted}, #{requestId},
-		#{strategyId}, #{json}, #{sent})
+		#{strategyId}, #{content}, #{sent})
 	</insert>
 	
 	<select id="countByRequestId" parameterType="java.lang.String"
 		resultType="java.lang.Integer">
-		select count(*) from PICKER_RESULT where deleted = '0' and
+		select count(*) from PICKER_REPLY where deleted = '0' and
 		request_id = #{requestId}
 	</select>
 
 	<select id="selectByRequestId" parameterType="java.lang.String"
-		resultMap="resultResultMap">
-		select * from PICKER_RESULT where deleted = '0' and
+		resultMap="replyResultMap">
+		select * from PICKER_REPLY where deleted = '0' and
 		request_id
 		= #{requestId} order by create_date asc;
 	</select>	
 
 	<select id="selectById" parameterType="java.lang.String"
-		resultMap="resultResultMap">
-		select * from PICKER_RESULT where id = #{id}
+		resultMap="replyResultMap">
+		select * from PICKER_REPLY where id = #{id}
 	</select>
 
 	<select id="selectBySent" parameterType="java.lang.Character"
-		resultMap="resultResultMap">
-		select * from PICKER_RESULT where deleted = '0' and sent =
+		resultMap="replyResultMap">
+		select * from PICKER_REPLY where deleted = '0' and sent =
 		#{sent} order by create_date asc limit 1
 	</select>
 
-	<update id="update" parameterType="org.shaohuogun.picker.result.model.Result"
+	<update id="update" parameterType="org.shaohuogun.picker.reply.model.Reply"
 		flushCache="true">
 		update
-		PICKER_RESULT set last_modifier = #{lastModifier},
+		PICKER_REPLY set last_modifier = #{lastModifier},
 		last_modify_date =
 		#{lastModifyDate}, deleted = #{deleted}, sent =
 		#{sent} where id = #{id}

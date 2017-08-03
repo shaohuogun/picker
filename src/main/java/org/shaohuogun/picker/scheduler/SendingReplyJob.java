@@ -8,8 +8,8 @@ import org.quartz.JobExecutionException;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerContext;
 import org.shaohuogun.picker.plugin.quartz.QuartzConfig;
-import org.shaohuogun.picker.result.model.Result;
-import org.shaohuogun.picker.result.service.ResultService;
+import org.shaohuogun.picker.reply.model.Reply;
+import org.shaohuogun.picker.reply.service.ReplyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,11 +22,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @DisallowConcurrentExecution
-public class SendingResultJob implements Job {
+public class SendingReplyJob implements Job {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	@Value("${quartz.job.repeat-interval.sending.resutl}")
+	@Value("${quartz.job.repeat-interval.sending.reply}")
 	private long repeatInterval;
 
 	@Override
@@ -35,25 +35,25 @@ public class SendingResultJob implements Job {
 			Scheduler scheduler = jobExecutionContext.getScheduler();
 			SchedulerContext schedulerContext = scheduler.getContext();
 			ApplicationContext applicationContext = (ApplicationContext) schedulerContext.get("applicationContext");
-			ResultService resultService = (ResultService) applicationContext.getBean("resultService");
-			Result result = resultService.getUnsentResult();
-			if (result == null) {
+			ReplyService replyService = (ReplyService) applicationContext.getBean("replyService");
+			Reply reply = replyService.getUnsentReply();
+			if (reply == null) {
 				return;
 			}
 			
-			resultService.send(result);
+			replyService.send(reply);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
 	}
 
-	@Bean(name = "sendingResultBean")
-	public JobDetailFactoryBean sendingResultBean() {
+	@Bean(name = "sendingReplyBean")
+	public JobDetailFactoryBean sendingReplyBean() {
 		return QuartzConfig.createJobDetail(this.getClass());
 	}
 
-	@Bean(name = "sendingResultTrigger")
-	public SimpleTriggerFactoryBean sendingResultTrigger(@Qualifier("sendingResultBean") JobDetail jobDetail) {
+	@Bean(name = "sendingReplyTrigger")
+	public SimpleTriggerFactoryBean sendingReplyTrigger(@Qualifier("sendingReplyBean") JobDetail jobDetail) {
 		return QuartzConfig.createSimpleTrigger(jobDetail, repeatInterval);
 	}
 

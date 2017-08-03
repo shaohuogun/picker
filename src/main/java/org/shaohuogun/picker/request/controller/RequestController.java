@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import org.shaohuogun.common.Controller;
 import org.shaohuogun.common.Pagination;
 import org.shaohuogun.common.Utility;
-import org.shaohuogun.picker.request.model.AsyncRequest;
+import org.shaohuogun.picker.request.model.Request;
 import org.shaohuogun.picker.request.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,9 +51,9 @@ public class RequestController extends Controller {
 		}
 		
 		JSONObject jsonReq = new JSONObject(sb.toString());
-		String actionType = jsonReq.getString(AsyncRequest.KEY_ACTION_TYPE);
-		String content = jsonReq.getString(AsyncRequest.KEY_CONTENT);
-		String hookUrl = jsonReq.getString(AsyncRequest.KEY_HOOK_URL);
+		String actionType = jsonReq.getString(Request.KEY_ACTION_TYPE);
+		String content = jsonReq.getString(Request.KEY_CONTENT);
+		String hookUrl = jsonReq.getString(Request.KEY_HOOK_URL);
 		if ((actionType == null) || actionType.isEmpty()) {
 			throw new IllegalArgumentException("Action type cann't be null or empty.");
 		}
@@ -67,7 +67,7 @@ public class RequestController extends Controller {
 		}
 		
 		String uuid = Utility.getUUID();
-		AsyncRequest asyncReq = new AsyncRequest();
+		Request asyncReq = new Request();
 		asyncReq.setId(uuid);
 		asyncReq.setCreator("41f98331-11b4-4b70-8ab3-b2b3332324b5");
 		asyncReq.setActionType(actionType);
@@ -79,7 +79,7 @@ public class RequestController extends Controller {
 	}
 	
 	@RequestMapping(value = "/api/request/{id}", method = RequestMethod.GET)
-	public AsyncRequest getRequest(@PathVariable String id) throws Exception {
+	public Request getRequest(@PathVariable String id) throws Exception {
 		return requestService.getRequest(id);
 	}
 	
@@ -95,16 +95,16 @@ public class RequestController extends Controller {
 	}	
 
 	@RequestMapping(value = "/api/request/{id}/redo", method = RequestMethod.GET)
-	public AsyncRequest redoRequest(@PathVariable String id) throws Exception {
-		AsyncRequest asyncReq = requestService.getRequest(id);
-		if (asyncReq == null) {
+	public Request redoRequest(@PathVariable String id) throws Exception {
+		Request req = requestService.getRequest(id);
+		if (req == null) {
 			throw new Exception("Invalid argument.");
 		}
 
-		asyncReq.setLastModifier("a11039eb-4ba1-441a-bfdb-0d40f61a53dd");
-		asyncReq.setLastModifyDate(new Date());
-		asyncReq.setStatus(AsyncRequest.STATUS_INITIAL);
-		return requestService.modifyRequest(asyncReq);
+		req.setLastModifier("a11039eb-4ba1-441a-bfdb-0d40f61a53dd");
+		req.setLastModifyDate(new Date());
+		req.setStatus(Request.STATUS_INITIAL);
+		return requestService.modifyRequest(req);
 	}
 
 }

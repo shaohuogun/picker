@@ -30,7 +30,7 @@ export class RequestListItem extends React.Component {
 
     var self = this;
     $.ajax({
-      url: "/api/request/" + self.props.request.id + "/results",
+      url: "/api/request/" + self.props.request.id + "/replies",
 			type: "GET",
 			data: {},
     }).then(function(data) {

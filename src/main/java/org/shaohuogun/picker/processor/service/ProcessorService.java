@@ -4,10 +4,10 @@ import java.util.Date;
 
 import org.json.JSONObject;
 import org.shaohuogun.common.Utility;
-import org.shaohuogun.picker.request.model.AsyncRequest;
+import org.shaohuogun.picker.request.model.Request;
 import org.shaohuogun.picker.request.service.RequestService;
-import org.shaohuogun.picker.result.model.Result;
-import org.shaohuogun.picker.result.service.ResultService;
+import org.shaohuogun.picker.reply.model.Reply;
+import org.shaohuogun.picker.reply.service.ReplyService;
 import org.shaohuogun.picker.strategy.model.Strategy;
 import org.shaohuogun.picker.strategy.service.StrategyPool;
 import org.shaohuogun.picker.strategy.tag.StrategyTag;
@@ -24,15 +24,15 @@ public class ProcessorService {
 	private RequestService requestService;
 
 	@Autowired
-	private ResultService resultService;
+	private ReplyService replyService;
 
-	public void process(AsyncRequest req) throws Exception {
+	public void process(Request req) throws Exception {
 		if (req == null) {
 			throw new NullPointerException("Request cann't be null.");
 		}
 
 		try {
-			req.setStatus(AsyncRequest.STATUS_PROCESSING);
+			req.setStatus(Request.STATUS_PROCESSING);
 			req.setStartTime(new Date());
 			requestService.modifyRequest(req);
 
@@ -53,31 +53,31 @@ public class ProcessorService {
 				for (int i = 1; i <= amount; i++) {
 					JSONObject jsonResult = PickerUtility.pickPage((url + i), strategyTag);
 
-					Result result = new Result();
-					result.setId(Utility.getUUID());
-					result.setCreator(req.getCreator());
-					result.setRequestId(req.getId());
-					result.setStrategyId(strategy.getId());
-					result.setJson(jsonResult.toString());
-					resultService.createResult(result);
+					Reply reply = new Reply();
+					reply.setId(Utility.getUUID());
+					reply.setCreator(req.getCreator());
+					reply.setRequestId(req.getId());
+					reply.setStrategyId(strategy.getId());
+					reply.setContent(jsonResult.toString());
+					replyService.createReply(reply);
 				}
 			} else {
 				JSONObject jsonResult = PickerUtility.pickPage(url, strategyTag);
 
-				Result result = new Result();
-				result.setId(Utility.getUUID());
-				result.setCreator(req.getCreator());
-				result.setRequestId(req.getId());
-				result.setStrategyId(strategy.getId());
-				result.setJson(jsonResult.toString());
-				resultService.createResult(result);
+				Reply reply = new Reply();
+				reply.setId(Utility.getUUID());
+				reply.setCreator(req.getCreator());
+				reply.setRequestId(req.getId());
+				reply.setStrategyId(strategy.getId());
+				reply.setContent(jsonResult.toString());
+				replyService.createReply(reply);
 			}
 
-			req.setStatus(AsyncRequest.STATUS_CLOSED);
+			req.setStatus(Request.STATUS_CLOSED);
 			req.setEndTime(new Date());
 			requestService.modifyRequest(req);
 		} catch (Exception e) {
-			req.setStatus(AsyncRequest.STATUS_ERROR);
+			req.setStatus(Request.STATUS_ERROR);
 			requestService.modifyRequest(req);
 			throw e;
 		}

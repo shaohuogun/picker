@@ -1,4 +1,4 @@
-package org.shaohuogun.picker.result.service;
+package org.shaohuogun.picker.reply.service;
 
 import java.util.Date;
 import java.util.List;
@@ -14,42 +14,42 @@ import org.json.JSONObject;
 import org.shaohuogun.common.Model;
 import org.shaohuogun.common.Pagination;
 import org.shaohuogun.common.Utility;
-import org.shaohuogun.picker.request.model.AsyncRequest;
+import org.shaohuogun.picker.request.model.Request;
 import org.shaohuogun.picker.request.service.RequestService;
-import org.shaohuogun.picker.result.dao.ResultDao;
-import org.shaohuogun.picker.result.model.Result;
+import org.shaohuogun.picker.reply.dao.ReplyDao;
+import org.shaohuogun.picker.reply.model.Reply;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class ResultService {
+public class ReplyService {
 	
 	@Autowired
 	private RequestService requestService;
 
 	@Autowired
-	private ResultDao resultDao;
+	private ReplyDao replyDao;
 
 	@Transactional
-	public Result createResult(Result result) throws Exception {
-		if (result == null) {
-			throw new NullPointerException("Result cann't be null.");
+	public Reply createReply(Reply reply) throws Exception {
+		if (reply == null) {
+			throw new NullPointerException("Reply cann't be null.");
 		}
 
-		resultDao.insert(result);
-		return resultDao.selectById(result.getId());
+		replyDao.insert(reply);
+		return replyDao.selectById(reply.getId());
 	}
 	
-	public int getResultCountOfRequest(String requestId) throws Exception {
+	public int getReplyCountOfRequest(String requestId) throws Exception {
 		if ((requestId == null) || requestId.isEmpty()) {
 			throw new IllegalArgumentException("Channel's id cann't be null or empty.");
 		}
 		
-		return resultDao.countByRequestId(requestId);
+		return replyDao.countByRequestId(requestId);
 	}
 
-	public Pagination getResultsOfRequest(String requestId, Pagination pagination) throws Exception {
+	public Pagination getRepliesOfRequest(String requestId, Pagination pagination) throws Exception {
 		if ((requestId == null) || requestId.isEmpty()) {
 			throw new IllegalArgumentException("Channel's id cann't be null or empty.");
 		}
@@ -60,45 +60,45 @@ public class ResultService {
 
 		int offset = (pagination.getPageIndex() - 1) * pagination.getPageSize();
 		int limit = pagination.getPageSize();
-		List<Model> results = resultDao.selectByRequestId(requestId, offset, limit);
-		pagination.setObjects(results);
+		List<Model> replies = replyDao.selectByRequestId(requestId, offset, limit);
+		pagination.setObjects(replies);
 		return pagination;
 	}
 	
-	public Result getResult(String id) throws Exception {
+	public Reply getReply(String id) throws Exception {
 		if ((id == null) || id.isEmpty()) {
-			throw new IllegalArgumentException("Result's id cann't be null or empty.");
+			throw new IllegalArgumentException("Reply's id cann't be null or empty.");
 		}
 
-		return resultDao.selectById(id);
+		return replyDao.selectById(id);
 	}
 	
-	public Result getUnsentResult() {
-		return resultDao.selectBySent(Result.SENT_NOT);
+	public Reply getUnsentReply() {
+		return replyDao.selectBySent(Reply.SENT_NOT);
 	}
 	
 	@Transactional
-	public Result modifyResult(Result result) throws Exception {
-		if (result == null) {
-			throw new NullPointerException("Result cann't be null.");
+	public Reply modifyReply(Reply reply) throws Exception {
+		if (reply == null) {
+			throw new NullPointerException("Reply cann't be null.");
 		}
 		
-		resultDao.update(result);
-		return resultDao.selectById(result.getId());
+		replyDao.update(reply);
+		return replyDao.selectById(reply.getId());
 	}
 
-	public void send(Result result) throws Exception {
-		if (result == null) {
-			throw new NullPointerException("Result cann't be null.");
+	public void send(Reply reply) throws Exception {
+		if (reply == null) {
+			throw new NullPointerException("Reply cann't be null.");
 		}
 		
 		JSONObject jsonResp = new JSONObject();
-		AsyncRequest asyncReq = requestService.getRequest(result.getRequestId());
-		jsonResp.put(AsyncRequest.KEY_SERIAL_NUMBER, asyncReq.getSerialNumber());
-		jsonResp.put(AsyncRequest.KEY_CONTENT, result.getJson());
+		Request req = requestService.getRequest(reply.getRequestId());
+		jsonResp.put(Request.KEY_SERIAL_NUMBER, req.getSerialNumber());
+		jsonResp.put(Request.KEY_CONTENT, reply.getContent());
 
 		HttpClient httpClient = HttpClientBuilder.create().build();
-		HttpPost httpPost = new HttpPost(asyncReq.getHookUrl());
+		HttpPost httpPost = new HttpPost(req.getHookUrl());
 		StringEntity params = new StringEntity(jsonResp.toString(), Utility.ENCODE_UTF8);
 		httpPost.addHeader("Content-Type", "application/json;charset=UTF-8");
 		httpPost.addHeader("Accept", "application/json");
@@ -108,12 +108,12 @@ public class ResultService {
 		StatusLine statusLine = httpResp.getStatusLine();
 		int statusCode = statusLine.getStatusCode();
 		if (statusCode != HttpStatus.SC_OK) {
-			throw new Exception("Fail to send result back to the client, status code: " + statusCode);
+			throw new Exception("Fail to reply to the client, status code: " + statusCode);
 		}
 		
-		result.setLastModifyDate(new Date());
-		result.setSent(Result.SENT_YES);
-		resultDao.update(result);
+		reply.setLastModifyDate(new Date());
+		reply.setSent(Reply.SENT_YES);
+		replyDao.update(reply);
 	}
 
 }

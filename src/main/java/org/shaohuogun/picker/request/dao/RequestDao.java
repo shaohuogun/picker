@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.shaohuogun.common.Model;
-import org.shaohuogun.picker.request.model.AsyncRequest;
+import org.shaohuogun.picker.request.model.Request;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -17,19 +17,19 @@ public class RequestDao {
 		this.sqlSession = sqlSession;
 	}
 
-	public void insert(AsyncRequest request) {
+	public void insert(Request request) {
 		sqlSession.insert("org.shaohuogun.picker.request.dao.RequestMapper.insert", request);
 	}
 
-	public AsyncRequest selectById(String id) {
+	public Request selectById(String id) {
 		return sqlSession.selectOne("org.shaohuogun.picker.request.dao.RequestMapper.selectById", id);
 	}
 
-	public AsyncRequest selectByStatus(String status) {
+	public Request selectByStatus(String status) {
 		return sqlSession.selectOne("org.shaohuogun.picker.request.dao.RequestMapper.selectByStatus", status);
 	}
 
-	public void update(AsyncRequest request) {
+	public void update(Request request) {
 		sqlSession.update("org.shaohuogun.picker.request.dao.RequestMapper.update", request);
 	}
 	

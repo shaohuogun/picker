@@ -15,8 +15,8 @@
 --
 
 drop table if exists `PICKER_STRATEGY`;
-drop table if exists `PICKER_ASYNC_REQUEST`;
-drop table if exists `PICKER_RESULT`;
+drop table if exists `PICKER_REQUEST`;
+drop table if exists `PICKER_REPLY`;
 
 CREATE TABLE `PICKER_STRATEGY` (
   `id` char(36) NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE `PICKER_STRATEGY` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `PICKER_ASYNC_REQUEST` (
+CREATE TABLE `PICKER_REQUEST` (
   `id` char(36) NOT NULL,
   `creator` char(36) NOT NULL,
   `create_date` datetime NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE `PICKER_ASYNC_REQUEST` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `PICKER_RESULT` (
+CREATE TABLE `PICKER_REPLY` (
   `id` char(36) NOT NULL,
   `creator` char(36) NOT NULL,
   `create_date` datetime NOT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE `PICKER_RESULT` (
   `deleted` char(1) NOT NULL,
   `request_id` char(36) DEFAULT NULL,
   `strategy_id` char(36) NOT NULL,  
-  `json` mediumblob NOT NULL,
+  `content` mediumblob NOT NULL,
   `sent` char(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

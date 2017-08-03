@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.shaohuogun.common.Model;
 
-public class AsyncRequest extends Model {
+public class Request extends Model {
 
 	private static final long serialVersionUID = 1L;
 	

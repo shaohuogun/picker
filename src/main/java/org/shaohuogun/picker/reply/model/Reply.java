@@ -1,8 +1,8 @@
-package org.shaohuogun.picker.result.model;
+package org.shaohuogun.picker.reply.model;
 
 import org.shaohuogun.common.Model;
 
-public class Result extends Model {
+public class Reply extends Model {
 
 	private static final long serialVersionUID = 1L;
 
@@ -13,7 +13,7 @@ public class Result extends Model {
 
 	private String strategyId;
 
-	private String json;
+	private String content;
 
 	private Character sent = SENT_NOT;
 
@@ -33,12 +33,12 @@ public class Result extends Model {
 		this.strategyId = strategyId;
 	}
 
-	public String getJson() {
-		return json;
+	public String getContent() {
+		return content;
 	}
 
-	public void setJson(String json) {
-		this.json = json;
+	public void setContent(String json) {
+		this.content = json;
 	}
 
 	public Character getSent() {
