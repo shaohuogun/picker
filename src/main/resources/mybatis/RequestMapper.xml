@@ -24,7 +24,7 @@
 
 	<insert id="insert" parameterType="org.shaohuogun.picker.request.model.Request">
 		insert into
-		PICKER_ASYNC_REQUEST
+		PICKER_REQUEST
 		(id,
 		creator,
 		create_date, deleted, action_type,
@@ -41,12 +41,12 @@
 
 	<select id="selectById" parameterType="java.lang.String"
 		resultMap="requestResultMap">
-		select * from PICKER_ASYNC_REQUEST where id = #{id}
+		select * from PICKER_REQUEST where id = #{id}
 	</select>
 
 	<select id="selectByStatus" parameterType="java.lang.String"
 		resultMap="requestResultMap">
-		select * from PICKER_ASYNC_REQUEST where deleted = '0' and
+		select * from PICKER_REQUEST where deleted = '0' and
 		status
 		=
 		#{status} order by create_date asc limit 1
@@ -54,7 +54,7 @@
 
 	<update id="update" parameterType="org.shaohuogun.picker.request.model.Request"
 		flushCache="true">
-		update PICKER_ASYNC_REQUEST
+		update PICKER_REQUEST
 		set last_modifier =
 		#{lastModifier},
 		last_modify_date =
@@ -69,7 +69,7 @@
 
 	<select id="countByCreator" parameterType="java.lang.String"
 		resultType="java.lang.Integer">
-		select count(*) from PICKER_ASYNC_REQUEST where deleted =
+		select count(*) from PICKER_REQUEST where deleted =
 		'0' and
 		creator
 		= #{creator}
@@ -77,7 +77,7 @@
 
 	<select id="selectByCreator" parameterType="java.lang.String"
 		resultMap="requestResultMap">
-		select * from PICKER_ASYNC_REQUEST where deleted = '0' and
+		select * from PICKER_REQUEST where deleted = '0' and
 		creator
 		= #{creator} order by create_date desc
 	</select>
