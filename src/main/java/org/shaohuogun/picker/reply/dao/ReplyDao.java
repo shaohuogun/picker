@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
-import org.shaohuogun.common.Model;
+import org.shaohuogun.common.Entity;
 import org.shaohuogun.picker.reply.model.Reply;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +25,7 @@ public class ReplyDao {
 		return sqlSession.selectOne("org.shaohuogun.picker.reply.dao.ReplyMapper.countByRequestId", requestId);
 	}
 
-	public List<Model> selectByRequestId(String requestId, int offset, int limit) {
+	public List<Entity> selectByRequestId(String requestId, int offset, int limit) {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		return sqlSession.selectList("org.shaohuogun.picker.reply.dao.ReplyMapper.selectByRequestId", requestId,
 				rowBounds);

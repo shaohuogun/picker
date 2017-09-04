@@ -3,7 +3,7 @@ package org.shaohuogun.picker.strategy.service;
 import java.util.Date;
 import java.util.List;
 
-import org.shaohuogun.common.Model;
+import org.shaohuogun.common.Entity;
 import org.shaohuogun.common.Pagination;
 import org.shaohuogun.picker.strategy.dao.StrategyDao;
 import org.shaohuogun.picker.strategy.model.Strategy;
@@ -41,7 +41,7 @@ public class StrategyService {
 		}
 		
 		Strategy strategy = strategyDao.selectById(id);
-		strategy.setDeleted(Model.DELETED_YES);
+		strategy.setDeleted(Entity.DELETED_YES);
 		strategyDao.update(strategy);
 		return strategy;
 	}
@@ -85,7 +85,7 @@ public class StrategyService {
 		
 		int offset = (pagination.getPageIndex() - 1) * pagination.getPageSize();
 		int limit = pagination.getPageSize();
-		List<Model> strategies = strategyDao.selectByCreator(creator, offset, limit);
+		List<Entity> strategies = strategyDao.selectByCreator(creator, offset, limit);
 		pagination.setObjects(strategies);
 		return pagination;
 	}

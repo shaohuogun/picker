@@ -1,8 +1,8 @@
 package org.shaohuogun.picker.reply.model;
 
-import org.shaohuogun.common.Model;
+import org.shaohuogun.common.Entity;
 
-public class Reply extends Model {
+public class Reply extends Entity {
 
 	private static final long serialVersionUID = 1L;
 

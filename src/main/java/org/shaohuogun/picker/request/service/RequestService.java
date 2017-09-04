@@ -2,7 +2,7 @@ package org.shaohuogun.picker.request.service;
 
 import java.util.List;
 
-import org.shaohuogun.common.Model;
+import org.shaohuogun.common.Entity;
 import org.shaohuogun.common.Pagination;
 import org.shaohuogun.picker.request.dao.RequestDao;
 import org.shaohuogun.picker.request.model.Request;
@@ -80,7 +80,7 @@ public class RequestService {
 		
 		int offset = (pagination.getPageIndex() - 1) * pagination.getPageSize();
 		int limit = pagination.getPageSize();
-		List<Model> requests = requestDao.selectByCreator(creator, offset, limit);
+		List<Entity> requests = requestDao.selectByCreator(creator, offset, limit);
 		pagination.setObjects(requests);
 		return pagination;
 	}

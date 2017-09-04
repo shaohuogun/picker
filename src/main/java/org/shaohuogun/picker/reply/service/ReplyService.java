@@ -11,7 +11,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONObject;
-import org.shaohuogun.common.Model;
+import org.shaohuogun.common.Entity;
 import org.shaohuogun.common.Pagination;
 import org.shaohuogun.common.Utility;
 import org.shaohuogun.picker.request.model.Request;
@@ -60,7 +60,7 @@ public class ReplyService {
 
 		int offset = (pagination.getPageIndex() - 1) * pagination.getPageSize();
 		int limit = pagination.getPageSize();
-		List<Model> replies = replyDao.selectByRequestId(requestId, offset, limit);
+		List<Entity> replies = replyDao.selectByRequestId(requestId, offset, limit);
 		pagination.setObjects(replies);
 		return pagination;
 	}

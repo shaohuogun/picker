@@ -2,9 +2,9 @@ package org.shaohuogun.picker.request.model;
 
 import java.util.Date;
 
-import org.shaohuogun.common.Model;
+import org.shaohuogun.common.Entity;
 
-public class Request extends Model {
+public class Request extends Entity {
 
 	private static final long serialVersionUID = 1L;
 	

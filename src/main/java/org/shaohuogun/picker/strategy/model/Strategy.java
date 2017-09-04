@@ -1,8 +1,8 @@
 package org.shaohuogun.picker.strategy.model;
 
-import org.shaohuogun.common.Model;
+import org.shaohuogun.common.Entity;
 
-public class Strategy extends Model {
+public class Strategy extends Entity {
 
 	private static final long serialVersionUID = 1L;
 	

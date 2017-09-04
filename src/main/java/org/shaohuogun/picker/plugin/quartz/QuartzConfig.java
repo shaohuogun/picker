@@ -7,6 +7,7 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.quartz.CronTrigger;
+import org.quartz.Job;
 import org.quartz.JobDetail;
 import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
@@ -74,7 +75,7 @@ public class QuartzConfig {
 		return factory;
 	}
 
-	public static JobDetailFactoryBean createJobDetail(Class<?> jobClass) {
+	public static JobDetailFactoryBean createJobDetail(Class<? extends Job> jobClass) {
 		JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
 		factoryBean.setJobClass(jobClass);
 		// Set job's durability to be stored in DB.
