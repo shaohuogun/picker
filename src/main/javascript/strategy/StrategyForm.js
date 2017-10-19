@@ -1,7 +1,7 @@
 import $ from "jquery";
 import React from 'react';
 import {Card, CardActions, CardHeader, CardTitle, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
+import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField';
 
 const strategyFormStyle = {
@@ -110,8 +110,8 @@ export default class StrategyForm extends React.Component {
       />
       </CardText>
       <CardActions style={toolbarStyle} expandable={true}>
-      <FlatButton label="取消" onTouchTap={this.handleCancel} />
-      <FlatButton label="提交" onTouchTap={this.handleSubmit} />
+      <Button label="取消" onTouchTap={this.handleCancel} />
+      <Button label="提交" onTouchTap={this.handleSubmit} />
       </CardActions>
       </Card>
     );

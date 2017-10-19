@@ -1,7 +1,7 @@
 import $ from "jquery";
 import React from 'react';
 import PropTypes from 'prop-types';
-import FlatButton from 'material-ui/FlatButton';
+import Button from 'material-ui/Button'
 import {Card, CardHeader, CardText, CardActions} from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
 import Pagination from 'material-ui-pagination';
@@ -28,7 +28,7 @@ export class StrategyListItem extends React.Component {
 			type: "DELETE",
 		  data: {},
 		}).then(function(data) {
-			
+
 		});
   }
 
@@ -46,7 +46,7 @@ export class StrategyListItem extends React.Component {
 			showExpandableButton={true}
 			/>
 			<CardActions style={actionStyle}>
-			<FlatButton
+			<Button
 			label="删除"
 			secondary={true}
 			onTouchTap={this.deleteStrategy.bind(this, strategy.id)}
@@ -82,7 +82,7 @@ export default class StrategyList extends React.Component {
 		};
 	}
 
-	loadPagination = (page) => {
+	loadMessages = (page) => {
 		var self = this;
 		$.ajax({
 			url: "/api/strategies",
@@ -98,7 +98,7 @@ export default class StrategyList extends React.Component {
 	}
 
 	componentDidMount() {
-		this.loadPagination(1);
+		this.loadMessages(1);
 	}
 
 	handleItemCLick = (strategyId) => {
@@ -116,11 +116,11 @@ export default class StrategyList extends React.Component {
 		for (var i = 0; i < strategyCount; i++) {
 			var strategy = strategies[i];
 			rows.push(
-				<StrategyListItem strategy={strategy} />
+				<StrategyListItem key={strategy.id} strategy={strategy} />
 			);
 
 			if (i < (strategyCount - 1)) {
-				rows.push(<Divider />);
+				rows.push(<Divider key={strategy.id} />);
 			}
 		}
 
@@ -135,7 +135,7 @@ export default class StrategyList extends React.Component {
 			total = {this.state.pagination.pageCount}
 			current = {this.state.pagination.pageIndex}
 			display = {this.state.pagination.pageShow}
-			onChange = {current => this.loadPagination(current)}
+			onChange = {current => this.loadMessages(current)}
 			/>
 			</CardActions>
 			</Card>

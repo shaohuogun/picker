@@ -1,7 +1,7 @@
 import $ from "jquery";
 import React from 'react';
 import PropTypes from 'prop-types';
-import FlatButton from 'material-ui/FlatButton';
+import Button from 'material-ui/Button'
 import {Card, CardHeader, CardText, CardActions} from 'material-ui/Card';
 import {ListItem, List} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
@@ -57,7 +57,7 @@ export class RequestListItem extends React.Component {
 		if ((request.status == "suspended") || (request.status == "error")) {
 			actions.push(
 				<CardActions style={actionStyle}>
-				<FlatButton
+				<Button
 				label="重新执行"
 				secondary={true}
 				onTouchTap={this.redoRequest.bind(this, request.id)}
@@ -101,7 +101,7 @@ export default class RequestList extends React.Component {
 		};
 	}
 
-	loadPagination = (page) => {
+	loadMessages = (page) => {
 		var self = this;
 		$.ajax({
 			url: "/api/requests",
@@ -117,7 +117,7 @@ export default class RequestList extends React.Component {
 	}
 
 	componentDidMount() {
-		this.loadPagination(1);
+		this.loadMessages(1);
 	}
 
 	handleItemCLick = (requestId) => {
@@ -135,11 +135,11 @@ export default class RequestList extends React.Component {
 		for (var i = 0; i < requestCount; i++) {
 			var request = requests[i];
 			rows.push(
-				<RequestListItem request={request} />
+				<RequestListItem key={request.id} request={request} />
 			);
 
 			if (i < (requestCount - 1)) {
-				rows.push(<Divider />);
+				rows.push(<Divider key={request.id} />);
 			}
 		}
 
@@ -154,7 +154,7 @@ export default class RequestList extends React.Component {
 			total = {this.state.pagination.pageCount}
 			current = {this.state.pagination.pageIndex}
 			display = {this.state.pagination.pageShow}
-			onChange = {current => this.loadPagination(current)}
+			onChange = {current => this.loadMessages(current)}
 			/>
 			</CardActions>
 			</Card>
